@@ -41,6 +41,19 @@ run migrate
 
 php yii migrate/up --migrationPath=@vendor/alex290/yii2-widget-content/migrations
 
+attach behaviour to your model (be sure that your model has "id" property)
+
+```php
+public function behaviors()
+{
+    return [
+        'image' => [
+            'class' => 'alex290\yii2images\behaviors\ImageBehave',
+        ]
+    ];
+}
+
+
 Вывести виджет
 
 <?= \alex290\widgetContent\Edit::widget(); ?>```
