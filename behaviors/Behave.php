@@ -19,4 +19,11 @@ class Behave extends Behavior
         $modelName = $this->getModule()->getShortClass($this->owner);
         return 'id - ' . $itemId . '. model name - ' . $modelName;
     }
+
+    public function getWidget()
+    {
+        $itemId = $this->owner->primaryKey;
+        $modelName = $this->getModule()->getShortClass($this->owner);
+        return 'id - ' . $itemId . '. model name - ' . $modelName;
+    }
 }
