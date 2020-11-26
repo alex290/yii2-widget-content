@@ -37,5 +37,10 @@ Once the extension is installed, simply use it in your code by  :
     ],
 ],
 
+run migrate
+
+```php
+php yii migrate/up --migrationPath=@vendor/alex290/yii2-widget-content/migrations
+
 ```php
 <?= \alex290\widgetContent\AutoloadExample::widget(); ?>```
