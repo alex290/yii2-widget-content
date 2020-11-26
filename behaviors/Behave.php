@@ -24,6 +24,13 @@ class Behave extends Behavior
     {
         $itemId = $this->owner->primaryKey;
         $modelName = $this->getModule()->getShortClass($this->owner);
-        return 'id - ' . $itemId . '. model name - ' . $modelName;
+        $html = $this->adminHtml($itemId, $modelName);
+        return $html;
+    }
+
+    protected function adminHtml($itemId, $modelName){
+        ob_start();
+        include __DIR__ . '/../tpl/admin-html.php';
+        return ob_get_clean();
     }
 }
