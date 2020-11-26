@@ -41,4 +41,6 @@ run migrate
 
 php yii migrate/up --migrationPath=@vendor/alex290/yii2-widget-content/migrations
 
-<?= \alex290\widgetContent\AutoloadExample::widget(); ?>```
+Вывести виджет
+
+<?= \alex290\widgetContent\Edit::widget(); ?>```
