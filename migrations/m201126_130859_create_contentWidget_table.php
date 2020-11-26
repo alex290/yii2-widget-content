@@ -13,14 +13,22 @@ class m201126_130859_create_contentWidget_table extends Migration
     public function safeUp()
     {
         $this->createTable('{{%contentWidget}}', [
-            'id' => $this->primaryKey(),
-            'weight' => $this->integer(),
+            'id' => $this->primaryKey()->unsigned(),
+            'weight' => $this->integer()->unsigned()->notNull(),
             'modelName' => $this->string(150)->notNull(),
-            'itemId' => $this->integer(),
-            'type' => $this->integer(),
-            'data' => $this->json(),
+            'itemId' => $this->integer()->unsigned()->notNull(),
+            'type' => $this->integer()->notNull(),
+            'data' => $this->json()->notNull(),
         ]);
+
+        $this->createIndex(
+            'idx-contentWidget-weight',
+            'contentWidget',
+            'weight'
+        );
     }
+
+    
 
     /**
      * {@inheritdoc}
@@ -30,3 +38,5 @@ class m201126_130859_create_contentWidget_table extends Migration
         $this->dropTable('{{%contentWidget}}');
     }
 }
+
+
