@@ -2,16 +2,15 @@
     "name": "alex290/yii2-widget-content",
     "description": "Widget content",
     "type": "yii2-extension",
-    "keywords": ["yii2","extension"],
+    "keywords": ["yii2", "extension"],
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Alexandr Martynov",
-            "email": "alexmar12@yandex.ru"
-        }
-    ],
+    "authors": [{
+        "name": "Alexandr Martynov",
+        "email": "alexmar12@yandex.ru"
+    }],
     "require": {
-        "yiisoft/yii2": "~2.0.0"
+        "yiisoft/yii2": "~2.0.0",
+        "alex290/yii2-images": "*"
     },
     "autoload": {
         "psr-4": {
