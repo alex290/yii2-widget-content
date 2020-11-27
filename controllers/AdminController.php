@@ -4,6 +4,7 @@ namespace alex290\widgetContent\controllers;
 
 use alex290\widgetContent\models\ContentWidget;
 use alex290\widgetContent\models\WidgetDoc;
+use alex290\widgetContent\models\WidgetImage;
 use alex290\widgetContent\models\WidgetText;
 use Yii;
 use yii\helpers\Url;
@@ -29,6 +30,29 @@ class AdminController extends Controller
         }
 
         return $this->render('add-text', [
+            'model' => $model,
+            'id' => $id,
+            'url' => $url
+        ]);
+    }
+
+    public function actionAddImage()
+    {
+        $modelName = Yii::$app->request->get('modelName');
+        $id = Yii::$app->request->get('id');
+        $patch = Yii::$app->request->get('patch');
+        $url = Yii::$app->request->get('url');
+
+        $this->layout = false;
+        $model = new WidgetImage();
+        $model->newModel($id, $modelName);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->saveModel();
+            return $this->redirect($url);
+        }
+
+        return $this->render('add-image', [
             'model' => $model,
             'id' => $id,
             'url' => $url

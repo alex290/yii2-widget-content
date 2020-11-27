@@ -15,9 +15,15 @@ class ContWidgetAsset extends AssetBundle
 {
     public $sourcePath = '@alex290/widgetContent/assets/scr';
     public $css = [
+        'fileinput/css/fileinput.css',
+        'fileinput/themes/explorer-fas/theme.css',
         'css/main.css',
     ];
     public $js = [
+        'fileinput/js/fileinput.js',
+        'fileinput/js/locales/ru.js',
+        'fileinput/themes/fas/theme.js',
+        'fileinput/themes/explorer-fas/theme.js',
         'ckeditor/ckeditor.js',
         'js/widget.js',
     ];

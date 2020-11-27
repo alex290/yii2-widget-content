@@ -12,7 +12,8 @@ function addWidgetText(data) {
                 var textName = $(this).attr('name');
                 CKEDITOR.replace(textName);
             });
-            $('#addWidget').modal('hide');
+            $('#collapseWidgetContent').collapse('hide');
+
         }
     });
 
@@ -39,15 +40,15 @@ function updateWidgetText(id) {
 
 }
 
-function addWidgetImage(id) {
+function addWidgetImage(data) {
     $.ajax({
         type: "GET",
-        url: "/widget-content/add-image",
-        data: { 'id': id },
+        url: "/widget-content/admin/add-image",
+        data: { 'patch': data['patch'], 'modelName': data['model'], 'id': data['id'], 'url': data['url'] },
         success: function(response) {
             $('.newContent').html(response);
             $('.wdgetAddBtn').remove();
-            $('#addWidget').modal('hide');
+            $('#collapseWidgetContent').collapse('hide');
             $('.image-fileinput').each(function(index, element) {
                 $(this).fileinput({
                     theme: 'fas',
