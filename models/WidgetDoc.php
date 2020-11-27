@@ -34,12 +34,14 @@ class WidgetDoc extends Model
         ];
     }
 
-    public function newModel($id)
+
+    public function newModel($id, $modelName)
     {
         $model = new ContentWidget();
-        $model->articleId = $id;
+        $model->itemId = $id;
+        $model->modelName = $modelName;
         $model->type = 3;
-        $model->weight = ContentWidget::find()->where(['articleId' => $id])->count();
+        $model->weight = ContentWidget::find()->andWhere(['itemId' => $id])->andWhere(['modelName' => $modelName])->count();
         $this->weight = $model->weight;
         $this->model = $model;
     }
