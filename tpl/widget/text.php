@@ -13,7 +13,7 @@ $updateWidgetText = Json::encode([
 ?>
 <div class="card-header d-flex justify-content-between haderWidgetUpr<?= $widget->id ?>">
     <div class="float-left">
-        <i class="fas fa-grip-lines"></i>
+        <i class="fas fa-grip-lines" style="cursor: pointer;"></i>
         <button class="btn btn-primary ml-5" type="button" data-toggle="collapse" data-target="#collapseWidCont<?= $widget->id ?>" aria-expanded="false" aria-controls="collapseWidCont<?= $widget->id ?>"><i class="fas fa-angle-double-down"></i></button>
     </div>
     <h2 class="font-weight-light">Текст</h2>
