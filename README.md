@@ -57,3 +57,8 @@ attach behaviour to your model (be sure that your model has "id" property)
     <?php if (!$model->isNewRecord) : ?>
         <?= $model->getWidget() ?>
     <?php endif ?>
+
+
+Получить массив объектов виджетов данной модели
+
+    $model->getContent();
