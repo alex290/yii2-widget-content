@@ -40,16 +40,13 @@ class WidgetText extends Model
     public function openModel($id)
     {
         $model = ContentWidget::findOne($id);
-        if ($model == null) {
-            $model = new ContentWidget();
-            $model->articleId = $id;
-            $model->type = 1;
-            $model->weight = ContentWidget::find()->where(['articleId' => $id])->count();
-        } else {
+        if ($model != null) {
             $data = Json::decode($model->data);
             if (array_key_exists('text', $data)) {
                 $this->text = $data['text'];
             }
+        } else {
+            return null;
         }
         $this->weight = $model->weight;
         $this->model = $model;

@@ -10,12 +10,14 @@ class WidgetImage extends Model
 {
     public $imageFile;
     public $weight;
+    public $title;
     public $model;
 
     public function rules()
     {
         return [
             [['weight'], 'integer'],
+            [['title'], 'string'],
             [['imageFile'], 'file', 'extensions' => 'png, jpg, jpeg'],
         ];
     }
@@ -41,11 +43,13 @@ class WidgetImage extends Model
     public function openModel($id)
     {
         $model = ContentWidget::findOne($id);
-        if ($model == null) {
-            $model = new ContentWidget();
-            $model->articleId = $id;
-            $model->type = 2;
-            $model->weight = ContentWidget::find()->where(['articleId' => $id])->count();
+        if ($model != null) {
+            $data = Json::decode($model->data);
+            if (array_key_exists('title', $data)) {
+                $this->title = $data['title'];
+            }
+        } else {
+            return null;
         }
         $this->weight = $model->weight;
         $this->model = $model;
@@ -54,11 +58,12 @@ class WidgetImage extends Model
     public function saveModel()
     {
         $model = $this->model;
+        $model->data = Json::encode([
+            'title' => $this->title,
+        ]);
 
         $this->imageFile = UploadedFile::getInstance($this, 'imageFile');
 
-
-        $model->data = Json::encode([]);
         if ($model->save()) {
             if ($this->imageFile) {
                 $path = 'upload/images' . $this->imageFile->baseName . '.' . $this->imageFile->extension;

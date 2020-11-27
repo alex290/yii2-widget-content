@@ -35,6 +35,25 @@ class AdminController extends Controller
         ]);
     }
 
+    public function actionUpdateText()
+    {
+        $id = Yii::$app->request->get('id');
+        $url = Yii::$app->request->get('url');
+        $this->layout = false;
+        $model = new WidgetText();
+        $model->openModel($id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->saveModel();
+            return $this->redirect($url);
+        }
+
+        return $this->render('add-text', [
+            'model' => $model,
+            'url' => $url
+        ]);
+    }
+
     public function actionAddImage()
     {
         $modelName = Yii::$app->request->get('modelName');
@@ -55,6 +74,29 @@ class AdminController extends Controller
             'model' => $model,
             'id' => $id,
             'url' => $url
+        ]);
+    }
+
+    public function actionUpdateImage($id)
+    {
+        $id = Yii::$app->request->get('id');
+        $url = Yii::$app->request->get('url');
+
+        $this->layout = false;
+        $model = new WidgetImage();
+        $model->openModel($id);
+
+        $preview = $model->model->getImage()->getPath();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->saveModel();
+            return $this->redirect($url);
+        }
+
+        return $this->render('update-image', [
+            'model' => $model,
+            'url' => $url,
+            'preview' => $preview,
         ]);
     }
 

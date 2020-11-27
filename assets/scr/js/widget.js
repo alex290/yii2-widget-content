@@ -19,21 +19,19 @@ function addWidgetText(data) {
 
 }
 
-function updateWidgetText(id) {
+function updateWidgetText(data) {
     $.ajax({
         type: "GET",
         url: "/widget-content/admin/update-text",
-        data: { 'id': id },
+        data: { 'id': data['id'], 'url': data['url'] },
         success: function(response) {
-            $('.bodyWidgetUpr' + id).html(response);
-            $('.haderWidgetUpr' + id).html('');
+            $('.bodyWidgetUpr' + data['id']).html(response);
+            $('.haderWidgetUpr' + data['id']).html('');
             $('.wdgetAddBtn').remove();
 
             $('.ckedit').each(function(index, el) {
                 var textName = $(this).attr('name');
-                CKEDITOR.replace(textName, {
-                    customConfig: '/web/lib/ckeditor/config-light.js'
-                });
+                CKEDITOR.replace(textName);
             });
         }
     });
@@ -65,14 +63,14 @@ function addWidgetImage(data) {
     });
 }
 
-function updateWidgetImage(id) {
+function updateWidgetImage(data) {
     $.ajax({
         type: "GET",
-        url: "/widget-content/update-image",
-        data: { 'id': id },
+        url: "/widget-content/admin/update-image",
+        data: { 'id': data['id'], 'url': data['url'] },
         success: function(response) {
-            $('.bodyWidgetUpr' + id).html(response);
-            $('.haderWidgetUpr' + id).html('');
+            $('.bodyWidgetUpr' + data['id']).html(response);
+            $('.haderWidgetUpr' + data['id']).html('');
             $('.wdgetAddBtn').remove();
 
             $('.image-fileinput-prew').each(function(index, element) {

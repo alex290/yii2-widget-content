@@ -7,6 +7,7 @@ use yii\widgets\ActiveForm;
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 <div class="card border border-info mt-3">
     <div class="card-body">
+        <?= $form->field($model, 'title')->textInput() ?>
         <?= $form->field($model, 'imageFile')->fileInput(['class' => 'image-fileinput']) ?>
     </div>
     <div class="card-footer d-flex justify-content-end">
