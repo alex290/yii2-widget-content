@@ -10,9 +10,7 @@ function addWidgetText(data) {
             $('.wdgetAddBtn').remove();
             $('.ckedit').each(function(index, el) {
                 var textName = $(this).attr('name');
-                CKEDITOR.replace(textName, {
-                    customConfig: '/web/lib/ckeditor/config-light.js'
-                });
+                CKEDITOR.replace(textName);
             });
             $('#addWidget').modal('hide');
         }
@@ -23,7 +21,7 @@ function addWidgetText(data) {
 function updateWidgetText(id) {
     $.ajax({
         type: "GET",
-        url: "/widget-content/update-text",
+        url: "/widget-content/admin/update-text",
         data: { 'id': id },
         success: function(response) {
             $('.bodyWidgetUpr' + id).html(response);

@@ -24,6 +24,7 @@ class AdminController extends Controller
         $this->layout = false;
         $model = new WidgetText();
         $model->newModel($id, $modelName);
+        debug($model);
 
         if ($model->load(Yii::$app->request->post())) {
             $model->saveModel();

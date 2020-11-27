@@ -18,6 +18,7 @@ class ContWidgetAsset extends AssetBundle
         'css/main.css',
     ];
     public $js = [
+        'ckeditor/ckeditor.js',
         'js/widget.js',
     ];
     public $depends = [
