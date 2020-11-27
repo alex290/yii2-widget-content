@@ -95,15 +95,15 @@ function updateWidgetImage(id) {
     });
 }
 
-function addWidgetDoc(id) {
+function addWidgetDoc(data) {
     $.ajax({
         type: "GET",
-        url: "/widget-content/add-doc",
-        data: { 'id': id },
+        url: "/widget-content/admin/add-doc",
+        data: { 'patch': data['patch'], 'modelName': data['model'], 'id': data['id'], 'url': data['url'] },
         success: function(response) {
             $('.newContent').html(response);
             $('.wdgetAddBtn').remove();
-            $('#addWidget').modal('hide');
+            $('#collapseWidgetContent').collapse('hide');
         }
     });
 
