@@ -3,6 +3,7 @@
 namespace alex290\widgetContent\models;
 
 use Yii;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "contentWidget".
@@ -47,6 +48,7 @@ class ContentWidget extends \yii\db\ActiveRecord
             [['imageFile'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
+
 
     /**
      * {@inheritdoc}

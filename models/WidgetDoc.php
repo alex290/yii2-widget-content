@@ -44,17 +44,14 @@ class WidgetDoc extends Model
         $model->weight = ContentWidget::find()->andWhere(['itemId' => $id])->andWhere(['modelName' => $modelName])->count();
         $this->weight = $model->weight;
         $this->model = $model;
+        
     }
 
     public function openModel($id)
     {
+
         $model = ContentWidget::findOne($id);
-        if ($model == null) {
-            $model = new ContentWidget();
-            $model->articleId = $id;
-            $model->type = 3;
-            $model->weight = ContentWidget::find()->where(['articleId' => $id])->count();
-        } else {
+        if ($model != null) {
             $data = Json::decode($model->data);
             if (array_key_exists('title', $data)) {
                 $this->title = $data['title'];
@@ -65,8 +62,9 @@ class WidgetDoc extends Model
             if (array_key_exists('file', $data)) {
                 $this->file = $data['file'];
             }
+        } else {
+            return null;
         }
-
         $this->weight = $model->weight;
         $this->model = $model;
     }
@@ -74,6 +72,8 @@ class WidgetDoc extends Model
     public function saveModel()
     {
         $model = $this->model;
+
+        $modelName = $model->modelName;
 
         $this->file = UploadedFile::getInstance($this, 'file');
         $model->data = Json::encode([
@@ -83,7 +83,7 @@ class WidgetDoc extends Model
         if ($model->save()) {
             if ($this->file) {
                 $this->deleteFile();
-                $dir = 'upload/files/Article/Article' . $model->id . '/';
+                $dir = 'upload/files/'. $modelName.'/'. $modelName . $model->id . '/';
                 FileHelper::createDirectory($dir);
                 $file = $this->file->baseName . '.' . $this->file->extension;
                 $path = $dir . $file;
@@ -109,7 +109,8 @@ class WidgetDoc extends Model
     public function deleteFile()
     {
         $model = $this->model;
-        $dir = 'upload/files/Article/Article' . $model->id;
+        $modelName = $model->modelName;
+        $dir = 'upload/files/'. $modelName.'/'. $modelName . $model->id;
         FileHelper::removeDirectory($dir);
     }
 }

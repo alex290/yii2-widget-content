@@ -107,14 +107,14 @@ function addWidgetDoc(data) {
 
 }
 
-function updateWidgetDoc(id) {
+function updateWidgetDoc(data) {
     $.ajax({
         type: "GET",
-        url: "/widget-content/update-doc",
-        data: { 'id': id },
+        url: "/widget-content/admin/update-doc",
+        data: { 'id': data['id'], 'url': data['url'] },
         success: function(response) {
-            $('.bodyWidgetUpr' + id).html(response);
-            $('.haderWidgetUpr' + id).html('');
+            $('.bodyWidgetUpr' + data['id']).html(response);
+            $('.haderWidgetUpr' + data['id']).html('');
             $('.wdgetAddBtn').remove();
         }
     });

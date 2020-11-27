@@ -123,6 +123,26 @@ class AdminController extends Controller
         ]);
     }
 
+    public function actionUpdateDoc($id)
+    {
+        $id = Yii::$app->request->get('id');
+        $url = Yii::$app->request->get('url');
+        $this->layout = false;
+        $model = new WidgetDoc();
+        $model->openModel($id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->saveModel();
+            return $this->redirect($url);
+        }
+
+        return $this->render('add-doc', [
+            'model' => $model,
+            'id' => $id,
+            'url' => $url
+        ]);
+    }
+
     public function actionDeleteWidget()
     {
         $id = Yii::$app->request->get('id');
