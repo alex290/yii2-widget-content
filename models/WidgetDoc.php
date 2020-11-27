@@ -8,7 +8,7 @@ use yii\helpers\FileHelper;
 use yii\helpers\Json;
 use yii\web\UploadedFile;
 
-class ArticleDoc extends Model
+class WidgetDoc extends Model
 {
     public $file;
     public $fileName;

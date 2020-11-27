@@ -2,6 +2,8 @@
 
 namespace alex290\widgetContent\controllers;
 
+use alex290\widgetContent\models\ContentWidget;
+use alex290\widgetContent\models\WidgetDoc;
 use alex290\widgetContent\models\WidgetText;
 use Yii;
 use yii\helpers\Url;
@@ -17,14 +19,9 @@ class AdminController extends Controller
         $patch = Yii::$app->request->get('patch');
         $url = Yii::$app->request->get('url');
 
-        // debug($patch);
-        // debug($modelName);
-        // debug($id);
-
         $this->layout = false;
         $model = new WidgetText();
         $model->newModel($id, $modelName);
-        debug($model);
 
         if ($model->load(Yii::$app->request->post())) {
             $model->saveModel();
@@ -36,5 +33,21 @@ class AdminController extends Controller
             'id' => $id,
             'url' => $url
         ]);
+    }
+
+    public function actionDeleteWidget()
+    {
+        $id = Yii::$app->request->get('id');
+        $url = Yii::$app->request->get('url');
+        $model = ContentWidget::findOne($id);
+        if ($model->type == 3) {
+            $articleDoc = new WidgetDoc();
+            $articleDoc->openModel($model->id);
+            $articleDoc->deleteFile();
+        }
+        $model->removeImages();
+        $model->delete();
+
+        return $this->redirect($url);
     }
 }

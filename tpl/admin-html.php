@@ -21,15 +21,16 @@ $data = Json::encode([
     <?php foreach ($models as $key => $widget) : ?>
         <div class="card" data-id=<?= $widget->id ?>>
             <?php if ($widget->type == 1) : ?>
-                <?= $this->render('widget/text', [
+                <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/text', [
                     'widget' => $widget,
                 ]) ?>
+
             <?php elseif ($widget->type == 2) : ?>
-                <?= $this->render('widget/image', [
+                <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/image', [
                     'widget' => $widget,
                 ]) ?>
             <?php elseif ($widget->type == 3) : ?>
-                <?= $this->render('widget/doc', [
+                <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/doc', [
                     'widget' => $widget,
                 ]) ?>
             <?php endif ?>

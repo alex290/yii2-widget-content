@@ -26,9 +26,17 @@ class ContentWidget extends \yii\db\ActiveRecord
         return 'contentWidget';
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function behaviors()
+    {
+        return [
+            'image' => [
+                'class' => 'alex290\yii2images\behaviors\ImageBehave',
+            ]
+        ];
+    }
+
+    public $imageFile;
+    
     public function rules()
     {
         return [
@@ -36,6 +44,7 @@ class ContentWidget extends \yii\db\ActiveRecord
             [['weight', 'itemId', 'type'], 'integer'],
             [['data'], 'safe'],
             [['modelName'], 'string', 'max' => 150],
+            [['imageFile'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -62,5 +71,18 @@ class ContentWidget extends \yii\db\ActiveRecord
     public function getContentWidgetItems()
     {
         return $this->hasMany(ContentWidgetItem::className(), ['contentId' => 'id']);
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $path = 'upload/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+            $this->imageFile->saveAs($path);
+            $this->attachImage($path);
+            unlink($path);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
