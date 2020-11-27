@@ -1,3 +1,28 @@
+$(document).ready(function() {
+    $(function() {
+        $(".sortableWidgetContent").sortable({
+            stop: function(event, ui) {
+                let id = [];
+                $('.sortableWidgetContentItem').each(function(index, element) {
+                    id[index] = $(element).data('id');
+                });
+
+                $.ajax({
+                    type: "GET",
+                    url: "/widget-content/data/sortable",
+                    data: { 'data': JSON.stringify(id) },
+                    success: function(response) {
+
+                    }
+                });
+                console.log(id);
+
+            }
+        });
+        $(".sortableWidgetContent").disableSelection();
+    });
+});
+
 function addWidgetText(data) {
 
     // console.log(data);

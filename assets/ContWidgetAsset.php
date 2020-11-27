@@ -17,6 +17,7 @@ class ContWidgetAsset extends AssetBundle
     public $css = [
         'fileinput/css/fileinput.css',
         'fileinput/themes/explorer-fas/theme.css',
+        'css/jquery-ui.min.css',
         'css/main.css',
     ];
     public $js = [
@@ -25,6 +26,7 @@ class ContWidgetAsset extends AssetBundle
         'fileinput/themes/fas/theme.js',
         'fileinput/themes/explorer-fas/theme.js',
         'ckeditor/ckeditor.js',
+        'js/jquery-ui.min.js',
         'js/widget.js',
     ];
     public $depends = [

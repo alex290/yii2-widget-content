@@ -18,8 +18,9 @@ $data = Json::encode([
 
 
 <?php if ($models != null) : ?>
+<div class="sortableWidgetContent">
     <?php foreach ($models as $key => $widget) : ?>
-        <div class="card" data-id=<?= $widget->id ?>>
+        <div class="card sortableWidgetContentItem" data-id=<?= $widget->id ?>>
             <?php if ($widget->type == 1) : ?>
                 <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/text', [
                     'widget' => $widget,
@@ -36,6 +37,7 @@ $data = Json::encode([
             <?php endif ?>
         </div>
     <?php endforeach ?>
+    </div>
 <?php endif ?>
 <div class="float-left w-100 newContent"></div>
 <div class="float-left w-100 d-flex justify-content-center mt-5 wdgetAddBtn">
