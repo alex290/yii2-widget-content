@@ -60,3 +60,10 @@ attach behaviour to your model (be sure that your model has "id" property)
 Получить массив объектов виджетов данной модели
 
     $model->getContent();
+
+
+Удалить виджеты
+
+    $model->removeWidgetAll();
+
+    $model->removeWidget($id);
