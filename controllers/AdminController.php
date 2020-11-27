@@ -7,7 +7,6 @@ use alex290\widgetContent\models\WidgetDoc;
 use alex290\widgetContent\models\WidgetImage;
 use alex290\widgetContent\models\WidgetText;
 use Yii;
-use yii\helpers\Url;
 use yii\web\Controller;
 
 class AdminController extends Controller

@@ -29,13 +29,12 @@ Once the extension is installed, simply use it in your code by  :
 
 в конфиге web.php прописать
 
-```php
-'modules' => [
-    'widget-content' => [
-        'class' => 'alex290\widgetContent\Module',
-        'imagesPath' => 'upload/images', //path to images
+    'modules' => [
+        'widget-content' => [
+            'class' => 'alex290\widgetContent\Module',
+            'imagesPath' => 'upload/images', //path to images
+        ],
     ],
-],
 
 run migrate
 
@@ -53,6 +52,8 @@ attach behaviour to your model (be sure that your model has "id" property)
     }
 
 
-Вывести виджет
+Вывести виджет в админке
 
-<?= \alex290\widgetContent\Edit::widget(); ?>```
+    <?php if (!$model->isNewRecord) : ?>
+        <?= $model->getWidget() ?>
+    <?php endif ?>
