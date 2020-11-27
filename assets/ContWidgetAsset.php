@@ -18,7 +18,7 @@ class ContWidgetAsset extends AssetBundle
         'css/main.css',
     ];
     public $js = [
-        'js/article.js',
+        'js/widget.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

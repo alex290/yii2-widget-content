@@ -1,8 +1,10 @@
-function addWidgetText(id) {
+function addWidgetText(data) {
+
+    // console.log(data);
     $.ajax({
         type: "GET",
-        url: "/widget-content/add-text",
-        data: { 'id': id },
+        url: "/widget-content/admin/add-text",
+        data: { 'patch': data['patch'], 'modelName': data['model'], 'id': data['id'], 'url': data['url'] },
         success: function(response) {
             $('.newContent').html(response);
             $('.wdgetAddBtn').remove();
