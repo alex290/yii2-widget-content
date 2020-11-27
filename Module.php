@@ -10,7 +10,7 @@ class Module extends BaseModule
 {
     
 
-    public $imagesPath;
+    public $path;
 
     public function init()
     {

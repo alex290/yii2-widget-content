@@ -2,6 +2,7 @@
 
 namespace alex290\widgetContent\models;
 
+use Yii;
 use yii\base\Model;
 use yii\helpers\Json;
 use yii\web\UploadedFile;
@@ -57,6 +58,7 @@ class WidgetImage extends Model
 
     public function saveModel()
     {
+        $filePath = Yii::$app->getModule('widget-content')->path;
         $model = $this->model;
         $model->data = Json::encode([
             'title' => $this->title,
@@ -66,7 +68,7 @@ class WidgetImage extends Model
 
         if ($model->save()) {
             if ($this->imageFile) {
-                $path = 'upload/images' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+                $path = $filePath.'/images' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
                 $model->removeImages();
                 $this->imageFile->saveAs($path);
                 $model->attachImage($path);

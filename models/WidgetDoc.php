@@ -75,6 +75,8 @@ class WidgetDoc extends Model
 
         $modelName = $model->modelName;
 
+        $filePath = Yii::$app->getModule('widget-content')->path;
+
         $this->file = UploadedFile::getInstance($this, 'file');
         $model->data = Json::encode([
             'title' => '',
@@ -83,7 +85,7 @@ class WidgetDoc extends Model
         if ($model->save()) {
             if ($this->file) {
                 $this->deleteFile();
-                $dir = 'upload/files/'. $modelName.'/'. $modelName . $model->id . '/';
+                $dir = $filePath.'/files/'. $modelName.'/'. $modelName . $model->id . '/';
                 FileHelper::createDirectory($dir);
                 $file = $this->file->baseName . '.' . $this->file->extension;
                 $path = $dir . $file;

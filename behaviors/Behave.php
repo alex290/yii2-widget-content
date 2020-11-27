@@ -29,7 +29,8 @@ class Behave extends Behavior
         $modelName = $data[(count($data) - 1)];
         $path = str_replace($modelName, '', $modelNamePath);
         $url = Url::to();
-        // debug($url);
+        
+        // debug($imagesPath);
 
         $html = $this->adminHtml($model->id, $modelName, $path, $url);
         return $html;

@@ -29,11 +29,9 @@ Once the extension is installed, simply use it in your code by  :
 
 в конфиге web.php прописать
 
-    'modules' => [
-        'widget-content' => [
-            'class' => 'alex290\widgetContent\Module',
-            'imagesPath' => 'upload/images', //path to images
-        ],
+    'widget-content' => [
+        'class' => 'alex290\widgetContent\Module',
+        'path' => 'upload', //path to files
     ],
 
 run migrate
