@@ -45,7 +45,7 @@ attach behaviour to your model (be sure that your model has "id" property)
     public function behaviors()
     {
         return [
-            'image' => [
+            'widget' => [
                 'class' => 'alex290\widgetContent\behaviors\Behave',
             ]
         ];
