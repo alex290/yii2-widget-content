@@ -73,7 +73,7 @@ attach behaviour to your model (be sure that your model has "id" property)
 Выводить записи на странице
     
     <?php if ($model->getContent() != null) : ?>
-        <?php foreach ($models as $key => $widget) : ?>
+        <?php foreach ($model->getContent() as $key => $widget) : ?>
                 <?php if ($widget->type == 1) : ?>
                     <?php $data = Json::decode($widget->data) ?>
                     <!-- Выводим текст ($data['text']) -->
