@@ -29,9 +29,11 @@ Once the extension is installed, simply use it in your code by  :
 
 в конфиге web.php прописать
 
-    'widget-content' => [
-        'class' => 'alex290\widgetContent\Module',
-        'path' => 'upload', //path to files
+    'modules' => [
+        'widget-content' => [
+            'class' => 'alex290\widgetContent\Module',
+            'path' => 'upload', //path to files
+        ],
     ],
 
 run migrate
@@ -67,3 +69,25 @@ attach behaviour to your model (be sure that your model has "id" property)
     $model->removeWidgetAll();
 
     $model->removeWidget($id);
+    
+Выводить записи на странице
+    
+    <?php if ($model->getContent() != null) : ?>
+        <?php foreach ($models as $key => $widget) : ?>
+                <?php if ($widget->type == 1) : ?>
+                    <?php $data = Json::decode($widget->data) ?>
+                    <!-- Выводим текст ($data['text']) -->
+                <?php elseif ($widget->type == 2) : ?>
+                    <?php $data = Json::decode($widget->data) ?>
+                    <!-- Выводим изображение -->
+                    <!-- $widget->getImage()->GetPath() -->
+                    <!-- Заголовок изображения ($data['title']) -->
+                <?php elseif ($widget->type == 3) : ?>
+                    <?php $data = Json::decode($widget->data) ?>
+                    <!-- Выводим файлы -->
+                    <a href="/web/<?= $data['file'] ?>" download="<?= $data['fileName'] ?>"><?= $data['title'] ?></a>
+                <?php endif ?>
+
+        <?php endforeach ?>
+    <?php endif ?>
+    
