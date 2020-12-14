@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\Json;
 
 /**
- * This is the model class for table "contentWidget".
+ * This is the model class for table "content_widget".
  *
  * @property int $id
  * @property int $weight
@@ -15,7 +15,7 @@ use yii\helpers\Json;
  * @property int $type
  * @property string $data
  *
- * @property ContentWidgetItem[] $contentWidgetItems
+ * @property contentWidgetItem[] $contentWidgetItems
  */
 class ContentWidget extends \yii\db\ActiveRecord
 {
@@ -24,7 +24,7 @@ class ContentWidget extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'contentWidget';
+        return 'content_widget';
     }
 
     public function behaviors()
@@ -66,11 +66,11 @@ class ContentWidget extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[ContentWidgetItems]].
+     * Gets query for [[content_widgetItems]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getContentWidgetItems()
+    public function getcontentWidgetItems()
     {
         return $this->hasMany(ContentWidgetItem::className(), ['contentId' => 'id']);
     }

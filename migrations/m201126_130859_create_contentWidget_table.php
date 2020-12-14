@@ -3,16 +3,16 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%contentWidget}}`.
+ * Handles the creation of table `{{%content_widget}}`.
  */
-class m201126_130859_create_contentWidget_table extends Migration
+class m201126_130859_create_content_widget_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%contentWidget}}', [
+        $this->createTable('{{%content_widget}}', [
             'id' => $this->primaryKey()->unsigned(),
             'weight' => $this->integer()->unsigned()->notNull(),
             'modelName' => $this->string(150)->notNull(),
@@ -22,8 +22,8 @@ class m201126_130859_create_contentWidget_table extends Migration
         ]);
 
         $this->createIndex(
-            'idx-contentWidget-weight',
-            'contentWidget',
+            'idx-content_widget-weight',
+            'content_widget',
             'weight'
         );
     }
@@ -35,7 +35,7 @@ class m201126_130859_create_contentWidget_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%contentWidget}}');
+        $this->dropTable('{{%content_widget}}');
     }
 }
 

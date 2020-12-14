@@ -5,7 +5,7 @@ namespace alex290\widgetContent\models;
 use Yii;
 
 /**
- * This is the model class for table "contentWidgetItem".
+ * This is the model class for table "content_widget_item".
  *
  * @property int $id
  * @property int $contentId
@@ -20,7 +20,7 @@ class ContentWidgetItem extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'contentWidgetItem';
+        return 'content_widget_item';
     }
 
     /**

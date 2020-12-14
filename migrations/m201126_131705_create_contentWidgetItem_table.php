@@ -3,30 +3,30 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%contentWidgetItem}}`.
+ * Handles the creation of table `{{%content_widget_item}}`.
  */
-class m201126_131705_create_contentWidgetItem_table extends Migration
+class m201126_131705_create_content_widget_item_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%contentWidgetItem}}', [
+        $this->createTable('{{%content_widget_item}}', [
             'id' => $this->primaryKey()->unsigned(),
             'contentId' => $this->integer()->unsigned()->notNull(),
             'data' => $this->json(),
         ]);
 
         $this->createIndex(
-            'idx-contentWidgetItem-contentId',
-            'contentWidgetItem',
+            'idx-content_widget_item-contentId',
+            'content_widget_item',
             'contentId'
         );
 
         $this->addForeignKey(
-            'fk-contentWidgetItem-contentId',
-            'contentWidgetItem',
+            'fk-content_widget_item-contentId',
+            'content_widget_item',
             'contentId',
             'contentWidget',
             'id',
@@ -39,7 +39,7 @@ class m201126_131705_create_contentWidgetItem_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%contentWidgetItem}}');
+        $this->dropTable('{{%content_widget_item}}');
     }
 }
 
