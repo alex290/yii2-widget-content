@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%content_widget_item}}`.
  */
-class m201126_131705_create_content_widget_item_table extends Migration
+class m201217_124338_create_content_widget_item_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -28,7 +28,7 @@ class m201126_131705_create_content_widget_item_table extends Migration
             'fk-content_widget_item-contentId',
             'content_widget_item',
             'contentId',
-            'contentWidget',
+            'content_widget',
             'id',
             'CASCADE'
         );
@@ -42,6 +42,3 @@ class m201126_131705_create_content_widget_item_table extends Migration
         $this->dropTable('{{%content_widget_item}}');
     }
 }
-
-
-
