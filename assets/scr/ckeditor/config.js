@@ -21,4 +21,5 @@ CKEDITOR.editorConfig = function(config) {
     ];
 
     config.removeButtons = 'Save,NewPage,ExportPdf,Preview,Print,Templates,Find,Replace,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Redo,Undo,CreateDiv,Blockquote,BidiLtr,BidiRtl,Language,Flash,PageBreak,About,ShowBlocks,Styles,Font';
+    config.allowedContent = true;
 };
