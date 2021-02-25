@@ -35,7 +35,16 @@ function addWidgetText(data) {
             $('.wdgetAddBtn').remove();
             $('.ckedit').each(function(index, el) {
                 var textName = $(this).attr('name');
-                CKEDITOR.replace(textName);
+                var ckConfig = $('.ckeditor_config').text();
+                if (ckConfig == null || ckConfig == '') {
+                    CKEDITOR.replace(textName);
+                } else {
+                    CKEDITOR.replace(textName, {
+                        customConfig: ckConfig,
+                    });
+                }
+
+
             });
             $('#collapseWidgetContent').collapse('hide');
 
@@ -56,7 +65,14 @@ function updateWidgetText(data) {
 
             $('.ckedit').each(function(index, el) {
                 var textName = $(this).attr('name');
-                CKEDITOR.replace(textName);
+                var ckConfig = $('.ckeditor_config').text();
+                if (ckConfig == null || ckConfig == '') {
+                    CKEDITOR.replace(textName);
+                } else {
+                    CKEDITOR.replace(textName, {
+                        customConfig: ckConfig,
+                    });
+                }
             });
         }
     });

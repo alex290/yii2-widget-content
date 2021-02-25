@@ -2,9 +2,11 @@
 
 use yii\widgets\ActiveForm;
 
+$ckeditorConfig = Yii::$app->getModule('widget-content')->ckeditorConfig;
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
+<div class="d-none ckeditor_config"><?= $ckeditorConfig ?></div>
 <div class="card border border-info mt-3">
     <div class="card-body">
         <?= $form->field($model, 'text')->textarea(['rows' => 6, 'class' => 'form-control ckedit'])->label(false) ?>

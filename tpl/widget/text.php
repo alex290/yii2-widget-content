@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\Url;
 
+
 $data = Json::decode($widget->data);
 $url = Url::to();
 $updateWidgetText = Json::encode([
@@ -11,6 +12,7 @@ $updateWidgetText = Json::encode([
     'url' => $url,
 ]);
 ?>
+
 <div class="card-header d-flex justify-content-between haderWidgetUpr<?= $widget->id ?>">
     <div class="float-left">
         <i class="fas fa-grip-lines" style="cursor: pointer;"></i>

@@ -3,7 +3,10 @@
 
 namespace alex290\widgetContent\assets;
 
+use Yii;
 use yii\web\AssetBundle;
+
+
 
 /**
  * Main application asset bundle.
@@ -25,7 +28,7 @@ class ContWidgetAsset extends AssetBundle
         'fileinput/js/locales/ru.js',
         'fileinput/themes/fas/theme.js',
         'fileinput/themes/explorer-fas/theme.js',
-        'ckeditor/ckeditor.js',
+        // 'ckeditor/ckeditor.js',
         'js/jquery-ui.min.js',
         'js/widget.js',
     ];
@@ -33,4 +36,21 @@ class ContWidgetAsset extends AssetBundle
         'yii\web\YiiAsset',
     ];
 
+    protected function ckeditor()
+    {
+        $ckeditor = 'ckeditor/ckeditor.js';
+        $ckeditorPath = Yii::$app->getModule('widget-content')->ckeditorPath;
+
+        if ($ckeditorPath) {
+            $ckeditor = $ckeditorPath;
+        }
+        $this->js[] = $ckeditor;
+    }
+
+    public function init()
+    {
+        parent::init();
+        $this->ckeditor();
+    }
+    
 }

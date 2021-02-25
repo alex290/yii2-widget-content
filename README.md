@@ -33,6 +33,8 @@ Once the extension is installed, simply use it in your code by  :
         'widget-content' => [
             'class' => 'alex290\widgetContent\Module',
             'path' => 'upload', //path to files
+            'ckeditorPath' => '/web/lib/ckeditor/ckeditor.js', // Путь к внешнему Ckeditor - Необязательно
+            'ckeditorConfig' => '/web/lib/ckeditor/config-st.js', // Путь к конфигурации внешнего Ckeditor  - Необязательно
         ],
     ],
 
