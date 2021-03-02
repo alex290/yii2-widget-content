@@ -5,6 +5,10 @@ use yii\helpers\Json;
 use yii\helpers\Url;
 
 $data = Json::decode($widget->data);
+$fileName = null;
+if (array_key_exists('fileName', $data)) {
+    $fileName = $data['fileName'];
+}
 
 $url = Url::to();
 $updateWidgetText = Json::encode([
@@ -27,7 +31,7 @@ $updateWidgetText = Json::encode([
 <div class="card-body bodyWidgetUpr<?= $widget->id ?> bodyWidget">
     <div class="collapse" id="collapseWidCont<?= $widget->id ?>">
         <div class="card card-body">
-            <h5><a href="/web/<?= $data['file'] ?>" download="<?= $data['fileName'] ?>"><?= $data['title'] ?></a></h5>
+            <h5><a href="/web/<?= $data['file'] ?>" download="<?= $fileName ?>"><?= $data['title'] ?></a></h5>
         </div>
     </div>
 </div>

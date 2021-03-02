@@ -18,25 +18,33 @@ $data = Json::encode([
 
 
 <?php if ($models != null) : ?>
-<div class="sortableWidgetContent">
-    <?php foreach ($models as $key => $widget) : ?>
-        <div class="card sortableWidgetContentItem" data-id=<?= $widget->id ?>>
-            <?php if ($widget->type == 1) : ?>
-                <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/text', [
-                    'widget' => $widget,
-                ]) ?>
+    <div class="sortableWidgetContent">
+        <?php foreach ($models as $key => $widget) : ?>
+            <div class="card sortableWidgetContentItem" data-id=<?= $widget->id ?>>
+                <?php if ($widget->type == 1) : ?>
+                    <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/text', [
+                        'widget' => $widget,
+                    ]) ?>
 
-            <?php elseif ($widget->type == 2) : ?>
-                <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/image', [
-                    'widget' => $widget,
-                ]) ?>
-            <?php elseif ($widget->type == 3) : ?>
-                <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/doc', [
-                    'widget' => $widget,
-                ]) ?>
-            <?php endif ?>
-        </div>
-    <?php endforeach ?>
+                <?php elseif ($widget->type == 2) : ?>
+                    <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/image', [
+                        'widget' => $widget,
+                    ]) ?>
+                <?php elseif ($widget->type == 3) : ?>
+                    <?php $dataFile = Json::decode($widget->data) ?>
+                    <?php if ($dataFile['file'] == null || $dataFile['file'] == '') : ?>
+                        <?php
+                        $widget->removeImages();
+                        $widget->delete(); 
+                        ?>
+                    <?php else : ?>
+                        <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/doc', [
+                            'widget' => $widget,
+                        ]) ?>
+                    <?php endif ?>
+                <?php endif ?>
+            </div>
+        <?php endforeach ?>
     </div>
 <?php endif ?>
 <div class="float-left w-100 newContent"></div>

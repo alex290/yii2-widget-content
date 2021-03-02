@@ -10,6 +10,7 @@ use alex290\widgetContent\models\ContentWidget;
 use alex290\widgetContent\models\WidgetDoc;
 use Yii;
 use yii\base\Behavior;
+use yii\helpers\Json;
 use yii\helpers\Url;
 
 class Behave extends Behavior
@@ -44,6 +45,18 @@ class Behave extends Behavior
         $data = explode("\\", $modelNamePath);
         $modelName = $data[(count($data) - 1)];
 
+        $modelWidget = ContentWidget::find()->andWhere(['itemId' => $model->id])->andWhere(['modelName' => $modelName])->orderBy(['weight' => SORT_ASC])->all();
+        if ($modelWidget != null) {
+            foreach ($modelWidget as $key => $value) {
+                if ($value->type == 3) {
+                    $dataFile = Json::decode($value->data);
+                    if ($dataFile['file'] == null || $dataFile['file'] == ''){
+                        $value->removeImages();
+                        $value->delete(); 
+                    }
+                }
+            }
+        }
         $modelWidget = ContentWidget::find()->andWhere(['itemId' => $model->id])->andWhere(['modelName' => $modelName])->orderBy(['weight' => SORT_ASC])->all();
 
         return $modelWidget;
