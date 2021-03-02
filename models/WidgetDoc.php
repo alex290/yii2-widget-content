@@ -2,6 +2,7 @@
 
 namespace alex290\widgetContent\models;
 
+use Codeception\Lib\Di;
 use Yii;
 use yii\base\Model;
 use yii\helpers\FileHelper;
@@ -90,6 +91,8 @@ class WidgetDoc extends Model
                 $file = $this->file->baseName . '.' . $this->file->extension;
                 $path = $dir . $file;
                 $this->file->saveAs($path);
+                // debug($dir);
+                // die;
                 $newPath = $dir . Yii::$app->getSecurity()->generateRandomString(6) . '.' . $this->file->extension;
                 rename($path, $newPath);
 
@@ -103,7 +106,7 @@ class WidgetDoc extends Model
                     'file' => $newPath,
                     'fileName' => $file,
                 ]);
-                $model->save(false);
+                $model->save();
             }
         }
     }

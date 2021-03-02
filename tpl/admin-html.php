@@ -2,6 +2,7 @@
 
 use alex290\widgetContent\assets\ContWidgetAsset;
 use alex290\widgetContent\models\ContentWidget;
+use alex290\widgetContent\models\WidgetDoc;
 use yii\helpers\Json;
 
 ContWidgetAsset::register(Yii::$app->view);
@@ -34,6 +35,9 @@ $data = Json::encode([
                     <?php $dataFile = Json::decode($widget->data) ?>
                     <?php if ($dataFile['file'] == null || $dataFile['file'] == '') : ?>
                         <?php
+                        $articleDoc = new WidgetDoc();
+                        $articleDoc->openModel($widget->id);
+                        $articleDoc->deleteFile();
                         $widget->removeImages();
                         $widget->delete(); 
                         ?>

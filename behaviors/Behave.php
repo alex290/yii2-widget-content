@@ -51,6 +51,9 @@ class Behave extends Behavior
                 if ($value->type == 3) {
                     $dataFile = Json::decode($value->data);
                     if ($dataFile['file'] == null || $dataFile['file'] == ''){
+                        $articleDoc = new WidgetDoc();
+                        $articleDoc->openModel($value->id);
+                        $articleDoc->deleteFile();
                         $value->removeImages();
                         $value->delete(); 
                     }
