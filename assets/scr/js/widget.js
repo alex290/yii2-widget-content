@@ -38,3 +38,17 @@ function showWodgetGrantPage() {
         widgetAddCont.classList.add("show");
     }
 }
+
+function pagesAddContWidget(data) {
+    console.log(data);
+    // let datArr = JSON.parse(data);
+    $.ajax({
+        type: "GET",
+        url: "/widget-content/admin/add",
+        data: { 'widget': JSON.stringify(data[3]), 'key': data[2], 'model': data[0], 'id': data[1] },
+        success: function(response) {
+            let htmlOb = document.querySelector('.get_cont_add_widget');
+            htmlOb.innerHTML = response;
+        }
+    });
+}
