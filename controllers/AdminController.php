@@ -26,24 +26,25 @@ class AdminController extends Controller
             $formModel = new DynamicModel($feild);
 
             foreach ($widget['fields'] as $key => $value) {
-                if ($value[0] = 'image') {
+                if ($value[0] == 'image') {
                     $formModel->addRule($key, 'file', ['extensions' => 'png, jpg']);
                 } else {
                     if (array_key_exists('max', $value)) $formModel->addRule($key, $value[0], ['max' => $value['max']]);
                     else $formModel->addRule($key, $value[0]);
-                    
                 }
             }
         }
-
+        $this->layout = false;
         // debug($formModel);
-        
+
         $modelName = new ContentWidget();
         $modelName->model_name = $modelName;
         $modelName->item_id = $id;
         $modelName->type = $key;
 
-        
+        return $this->render('add', [
+            'widget' => $widget,
+            'formModel' => $formModel
+        ]);
     }
-    
 }
