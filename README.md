@@ -56,10 +56,36 @@ attach behaviour to your model (be sure that your model has "id" property)
 
 Вывести виджет в админке
 
-    <?php if (!$model->isNewRecord) : ?>
-        <?= $model->getWidget() ?>
-    <?php endif ?>
+    $widget = [
+        'text' => [
+            'name' => 'Текст',
+            'preview' => '/web/images/widget/header.png',
+            'fields' => [
+                'name' => ['string', 'max' => 255],
+                'text' => ['string'],
+                'image' => ['image'],
+            ]
+        ],
+		...
+        'galery' => [ // Ключ уникальный поля 
+            'name' => 'Галерея', // Название виджета
+            'preview' => '/web/images/widget/textImageTwo.png', // Путь к превьюшке
+            'fields' => [
+                'name' => ['string', 'max' => 255],  // Тип поля
+                'text' => ['string'], // Тип поля
+            ],
+            'item' => [ // Дополнительные поля (Например в галлереи несколько картинок)
+                'name' => ['string', 'max' => 255], 
+                'image' => ['image'],
+            ]
+        ],
+    ];
 
+----------
+
+    <?php if (!$model->isNewRecord) : ?>
+    		<?= $model->getWidget($widget) ?>
+    <?php endif ?>
 
 Получить массив объектов виджетов данной модели
 
