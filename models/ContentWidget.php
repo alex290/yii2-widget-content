@@ -41,10 +41,10 @@ class ContentWidget extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['weight', 'modelName', 'itemId', 'type', 'data'], 'required'],
-            [['weight', 'itemId', 'type'], 'integer'],
+            [['weight', 'model_name', 'item_id', 'type', 'data'], 'required'],
+            [['weight', 'item_id', 'type'], 'integer'],
             [['data'], 'safe'],
-            [['modelName'], 'string', 'max' => 150],
+            [['model_name'], 'string', 'max' => 150],
             [['imageFile'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
@@ -58,8 +58,8 @@ class ContentWidget extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'weight' => 'Weight',
-            'modelName' => 'Model Name',
-            'itemId' => 'Item ID',
+            'model_name' => 'Model Name',
+            'item_id' => 'Item ID',
             'type' => 'Type',
             'data' => 'Data',
         ];
@@ -77,8 +77,9 @@ class ContentWidget extends \yii\db\ActiveRecord
 
     public function upload()
     {
+        $filePath = Yii::$app->getModule('widget-content')->path;
         if ($this->validate()) {
-            $path = 'upload/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+            $path = $filePath .'/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
             $this->imageFile->saveAs($path);
             $this->attachImage($path);
             unlink($path);

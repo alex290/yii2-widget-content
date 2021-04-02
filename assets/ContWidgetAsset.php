@@ -20,16 +20,14 @@ class ContWidgetAsset extends AssetBundle
     public $css = [
         'fileinput/css/fileinput.css',
         'fileinput/themes/explorer-fas/theme.css',
-        'css/jquery-ui.min.css',
         'css/main.css',
     ];
     public $js = [
+        'js/Sortable.js',
         'fileinput/js/fileinput.js',
         'fileinput/js/locales/ru.js',
         'fileinput/themes/fas/theme.js',
         'fileinput/themes/explorer-fas/theme.js',
-        // 'ckeditor/ckeditor.js',
-        'js/jquery-ui.min.js',
         'js/widget.js',
     ];
     public $depends = [
@@ -38,13 +36,12 @@ class ContWidgetAsset extends AssetBundle
 
     protected function ckeditor()
     {
-        $ckeditor = 'ckeditor/ckeditor.js';
         $ckeditorPath = Yii::$app->getModule('widget-content')->ckeditorPath;
 
         if ($ckeditorPath) {
-            $ckeditor = $ckeditorPath;
+            $this->js[] = $ckeditorPath;
         }
-        $this->js[] = $ckeditor;
+        
     }
 
     public function init()
