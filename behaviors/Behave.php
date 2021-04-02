@@ -23,7 +23,7 @@ class Behave extends Behavior
         return 'id - ' . $itemId . '. model name - ' . $modelName;
     }
 
-    public function getWidget()
+    public function getWidget($widget = null)
     {
         $model = $this->owner;
         $modelNamePath = $model->className();
@@ -32,9 +32,9 @@ class Behave extends Behavior
         $path = str_replace($modelName, '', $modelNamePath);
         $url = Url::to();
 
-        // debug($imagesPath);
+        // debug($widget);
 
-        $html = $this->adminHtml($model->id, $modelName, $path, $url);
+        $html = $this->adminHtml($model->id, $modelName, $path, $url, $widget);
         return $html;
     }
 
@@ -102,7 +102,7 @@ class Behave extends Behavior
         }
     }
 
-    protected function adminHtml($itemId, $modelName, $subdir, $url)
+    protected function adminHtml($itemId, $modelName, $subdir, $url, $widget)
     {
         ob_start();
         include __DIR__ . '/../tpl/admin-html.php';

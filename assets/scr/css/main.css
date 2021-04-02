@@ -44,3 +44,18 @@ button.btn_add_pages {
 .carusel_widget .slick-next {
     right: 0;
 }
+
+.card-img-widg {
+    position: relative;
+    width: 100%;
+    padding-bottom: 60%;
+}
+
+.card-img-widg .img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
