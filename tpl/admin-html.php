@@ -34,7 +34,7 @@ $data = Json::encode([
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Шапка</h5>
-                                    <button href="#" class="btn btn-primary" onclick="pagesAddGarndHeader()">Добавить</button>
+                                    <button href="#" class="btn btn-primary" onclick="pagesAddContWidget()">Добавить</button>
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@ $data = Json::encode([
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Текст с картинкой</h5>
-                                    <button href="#" class="btn btn-primary" onclick="pagesAddGarndTextImage()">Добавить</button>
+                                    <button href="#" class="btn btn-primary" onclick="pagesAddContWidget()">Добавить</button>
                                 </div>
                             </div>
                         </div>
@@ -57,73 +57,7 @@ $data = Json::encode([
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Карточки - текст с картинкой</h5>
-                                    <button href="#" class="btn btn-primary" onclick="pagesAddGarndTextImageCard()">Добавить</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pl-3 pr-3">
-                            <div class="card">
-                                <div class="card-img-widg">
-                                    <div class="img" alt="..." style="background-image: url(/web/images/pages/widget/videoText.png);"></div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Текст с видео</h5>
-                                    <button href="#" class="btn btn-primary" onclick="pagesAddGarndTextVideo()">Добавить</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pl-3 pr-3">
-                            <div class="card">
-                                <div class="card-img-widg">
-                                    <div class="img" alt="..." style="background-image: url(/web/images/pages/widget/textImageTwo.png);"></div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Текст с картинкой одиночный</h5>
-                                    <button href="#" class="btn btn-primary" onclick="pagesAddGarndTextImageTwo()">Добавить</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pl-3 pr-3">
-                            <div class="card">
-                                <div class="card-img-widg">
-                                    <div class="img" alt="..." style="background-image: url(/web/images/pages/widget/calcModel.png);"></div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Расчитать модель</h5>
-                                    <button href="#" class="btn btn-primary" onclick="pagesAddGarndCalcModel()">Добавить</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pl-3 pr-3">
-                            <div class="card">
-                                <div class="card-img-widg">
-                                    <div class="img" alt="..." style="background-image: url(/web/images/pages/widget/videoTextBlack.png);"></div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Текст с видео черный</h5>
-                                    <button href="#" class="btn btn-primary" onclick="pagesAddGarndTextVideoBlack()">Добавить</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pl-3 pr-3">
-                            <div class="card">
-                                <div class="card-img-widg">
-                                    <div class="img" alt="..." style="background-image: url(/web/images/pages/widget/textImageTree.png);"></div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Текст с картинкой третий</h5>
-                                    <button href="#" class="btn btn-primary" onclick="pagesAddGarndTextImageTree()">Добавить</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pl-3 pr-3">
-                            <div class="card">
-                                <div class="card-img-widg">
-                                    <div class="img" alt="..." style="background-image: url(/web/images/pages/widget/formRequest.png);"></div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Форма заявки</h5>
-                                    <button href="#" class="btn btn-primary" onclick="pagesAddGarndFormRequest()">Добавить</button>
+                                    <button href="#" class="btn btn-primary" onclick="pagesAddContWidget()">Добавить</button>
                                 </div>
                             </div>
                         </div>

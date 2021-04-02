@@ -21,3 +21,26 @@ button.btn_add_pages {
     opacity: 1;
     z-index: 10;
 }
+
+.carusel_widget .slick-arrow {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background-color: rgb(83, 83, 83);
+    border: none;
+    z-index: 10;
+}
+
+.carusel_widget .slick-arrow svg {
+    width: 15px;
+    height: auto;
+    color: #fff;
+}
+
+.carusel_widget .slick-prev {
+    left: 0;
+}
+
+.carusel_widget .slick-next {
+    right: 0;
+}
