@@ -29,10 +29,10 @@ class ContentWidgetItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['contentId'], 'required'],
-            [['contentId'], 'integer'],
+            [['content_id','weight'], 'required'],
+            [['content_id', 'weight'], 'integer'],
             [['data'], 'safe'],
-            [['contentId'], 'exist', 'skipOnError' => true, 'targetClass' => ContentWidget::className(), 'targetAttribute' => ['contentId' => 'id']],
+            [['content_id'], 'exist', 'skipOnError' => true, 'targetClass' => ContentWidget::className(), 'targetAttribute' => ['content_id' => 'id']],
         ];
     }
 
@@ -43,8 +43,9 @@ class ContentWidgetItem extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'contentId' => 'Content ID',
+            'content_id' => 'Content ID',
             'data' => 'Data',
+            'weight' => 'Weight',
         ];
     }
 
@@ -55,6 +56,6 @@ class ContentWidgetItem extends \yii\db\ActiveRecord
      */
     public function getContent()
     {
-        return $this->hasOne(ContentWidget::className(), ['id' => 'contentId']);
+        return $this->hasOne(ContentWidget::className(), ['id' => 'content_id']);
     }
 }

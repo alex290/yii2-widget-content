@@ -42,9 +42,9 @@ class ContentWidget extends \yii\db\ActiveRecord
     {
         return [
             [['weight', 'model_name', 'item_id', 'type', 'data'], 'required'],
-            [['weight', 'item_id', 'type'], 'integer'],
+            [['weight', 'item_id'], 'integer'],
             [['data'], 'safe'],
-            [['model_name'], 'string', 'max' => 150],
+            [['model_name', 'type'], 'string', 'max' => 150],
             [['imageFile'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
@@ -72,7 +72,7 @@ class ContentWidget extends \yii\db\ActiveRecord
      */
     public function getcontentWidgetItems()
     {
-        return $this->hasMany(ContentWidgetItem::className(), ['contentId' => 'id']);
+        return $this->hasMany(ContentWidgetItem::className(), ['content_id' => 'id']);
     }
 
     public function upload()
