@@ -6,7 +6,7 @@ use alex290\widgetContent\models\ContentWidget;
 ContWidgetAsset::register(Yii::$app->view);
 
 $models = ContentWidget::find()->andWhere(['model_name' => $modelName])->andWhere(['item_id' => $itemId])->orderBy(['weight' => SORT_ASC])->all();
-debug($widget);
+// debug($widget);
 
 ?>
 
@@ -19,18 +19,18 @@ debug($widget);
                 <div class="card card-body w-100">
                     <div class="carusel_widget">
                         <?php if (!empty($widget)) : ?>
-                        <?php foreach ($widget as $key => $valueWidget): ?>
-                            <div class="pl-3 pr-3">
-                                <div class="card">
-                                    <div class="card-img-widg">
-                                        <div class="img" alt="..." style="background-image: url(<?= $valueWidget['preview'] ?>);"></div>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title"><?= $valueWidget['name'] ?></h5>
-                                        <button href="#" class="btn btn-primary" onclick='pagesAddContWidget("<?= $key ?>")'>Добавить</button>
+                            <?php foreach ($widget as $key => $valueWidget) : ?>
+                                <div class="pl-3 pr-3">
+                                    <div class="card">
+                                        <div class="card-img-widg">
+                                            <div class="img" alt="..." style="background-image: url(<?= $valueWidget['preview'] ?>);"></div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title"><?= $valueWidget['name'] ?></h5>
+                                            <button href="#" class="btn btn-primary" onclick='pagesAddContWidget("<?= $key ?>")'>Добавить</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             <?php endforeach ?>
                         <?php endif ?>
                     </div>
