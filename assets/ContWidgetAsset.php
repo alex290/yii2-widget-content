@@ -20,10 +20,12 @@ class ContWidgetAsset extends AssetBundle
     public $css = [
         'fileinput/css/fileinput.css',
         'fileinput/themes/explorer-fas/theme.css',
+        'css/slick.css',
         'css/main.css',
     ];
     public $js = [
         'js/Sortable.js',
+        'js/slick.min.js',
         'fileinput/js/fileinput.js',
         'fileinput/js/locales/ru.js',
         'fileinput/themes/fas/theme.js',
