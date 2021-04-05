@@ -59,3 +59,14 @@ button.btn_add_pages {
     height: 100%;
     background-size: cover;
 }
+
+button.btn_setting_pages_close {
+    position: absolute;
+    border: none;
+    display: block;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    background: none;
+    font-size: 24px;
+}

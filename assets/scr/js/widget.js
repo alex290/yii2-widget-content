@@ -40,7 +40,7 @@ function showWodgetGrantPage() {
 }
 
 function pagesAddContWidget(data) {
-    console.log(data);
+    // console.log(data);
     // let datArr = JSON.parse(data);
     $.ajax({
         type: "GET",
@@ -49,6 +49,64 @@ function pagesAddContWidget(data) {
         success: function(response) {
             let htmlOb = document.querySelector('.get_cont_add_widget');
             htmlOb.innerHTML = response;
+            ckeditSt();
+            fileInpurAjax('image-fileinput');
         }
     });
+}
+
+function ckeditSt() {
+    $('.ckStandart').each(function(index, element) {
+        let ckpath = $(this).data('ckpath');
+        if (ckpath) {
+            let ckpathId = $(this).attr('id');
+            let ckconf = $(this).data('ckconf');
+            // console.log(ckconf);
+            CKEDITOR.replace(ckpathId, {
+                customConfig: ckconf,
+            });
+        }
+
+    });
+
+}
+
+function fileInpurAjax(classItem) {
+    $('.' + classItem).each(function(index, element) {
+        $(this).fileinput({
+            theme: 'fas',
+            language: 'ru',
+            allowedFileExtensions: ['jpg', 'png', 'jpeg', 'svg'],
+            initialPreviewAsData: true,
+            showUpload: false,
+            showRemove: false,
+            // maxFileSize: 2000,
+        });
+
+    });
+}
+
+function fileInpurAjaxPrew(classItem) {
+
+    $('.' + classItem).each(function(index, element) {
+        let previewImage = $(this).data('image');
+        $(this).fileinput({
+            theme: 'fas',
+            language: 'ru',
+            allowedFileExtensions: ['jpg', 'png', 'jpeg', 'svg'],
+            initialPreviewAsData: true,
+            initialPreview: [
+                previewImage == '' ? null : '/web/' + previewImage,
+            ],
+            showUpload: false,
+            showRemove: false,
+            // maxFileSize: 2000,
+        });
+
+    });
+
+}
+
+function widgetClose() {
+    document.location.reload();
 }
