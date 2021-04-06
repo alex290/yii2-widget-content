@@ -52,6 +52,7 @@ function pagesAddContWidget(data) {
             htmlOb.innerHTML = response;
             ckeditSt();
             fileInpurAjax('image-fileinput');
+            showRemove();
         }
     });
 }
@@ -65,7 +66,7 @@ function showEditWidget(data) {
             showRemove();
             $('.get_cont_update_widget_' + data[0]).html(response);
             ckeditSt();
-            fileInpurAjax('image-fileinput');
+            fileInpurAjaxPrew('image-fileinput');
             disabSort();
         }
     });
