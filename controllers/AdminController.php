@@ -126,13 +126,21 @@ class AdminController extends Controller
         $id = Yii::$app->request->get('id');
         $widget = Json::decode(Yii::$app->request->get('widget'));
 
+        $img = false;
+
+        foreach ($widget as $key => $value) {
+            if ($value[0] == 'image') {
+                $img = true;
+            }
+        }
+
         $model = ContentWidget::findOne($id);
 
         // debug($widget);
         // die;
 
         $data = Json::decode($model->data);
-        
+
 
 
         $feild = [];
@@ -140,6 +148,9 @@ class AdminController extends Controller
         if (!empty($data)) {
             foreach ($data as $key => $value) {
                 $feild[] = $key;
+            }
+            if ($img == true) {
+                $feild[] = 'image';
             }
 
             $feild[] = 'widget';
@@ -152,6 +163,9 @@ class AdminController extends Controller
                 if (array_key_exists('max', $widget[$key])) $formModel->addRule($key, $widget[$key][0], ['max' => $widget[$key]['max']]);
                 else $formModel->addRule($key, $widget[$key][0]);
                 $formModel->$key = $value;
+            }
+            if ($img == true) {
+                $formModel->addRule('image', 'file', ['extensions' => 'png, jpg']);
             }
 
             // die;
@@ -166,7 +180,8 @@ class AdminController extends Controller
 
         return $this->render('update', [
             'widget' => $widget,
-            'formModel' => $formModel
+            'formModel' => $formModel,
+            'model' => $model
         ]);
     }
 

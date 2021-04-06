@@ -24,7 +24,9 @@ $ckeditorPath = Yii::$app->getModule('widget-content')->ckeditorPath;
             'action' => "/widget-content/admin/save",
         ]) ?>
             <?php foreach ($widget as $key => $value) : ?>
-                <?php if ($value[0] == 'string' && array_key_exists('max', $value)) : ?>
+                <?php if ($value[0] == 'image') : ?>
+                    <?= $form->field($formModel, $key)->fileInput(['class' => 'image-fileinput']) ?>
+                <?php elseif ($value[0] == 'string' && array_key_exists('max', $value)) : ?>
                     <?= $form->field($formModel, $key)->textInput() ?>
                 <?php elseif ($value[0] == 'string') : ?>
                     <?= $form->field($formModel, $key)->textarea(['rows' => 6, 'class' => 'ckStandart', 'data-ckconf' => $ckeditorConfig, 'data-ckpath' => $ckeditorPath]) ?>
