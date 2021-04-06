@@ -42,10 +42,11 @@ function showWodgetGrantPage() {
 function pagesAddContWidget(data) {
     // console.log(data);
     // let datArr = JSON.parse(data);
+    console.log(data[4]);
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "/widget-content/admin/add",
-        data: { 'widget': JSON.stringify(data[3]), 'key': data[2], 'model': data[0], 'id': data[1] },
+        data: { 'widget': JSON.stringify(data[3]), 'key': data[2], 'model': data[0], 'id': data[1], 'url': data[4] },
         success: function(response) {
             let htmlOb = document.querySelector('.get_cont_add_widget');
             htmlOb.innerHTML = response;

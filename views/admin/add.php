@@ -20,7 +20,7 @@ $ckeditorPath = Yii::$app->getModule('widget-content')->ckeditorPath;
     <div class="card-body">
         <?php $form = ActiveForm::begin([
             'options' => ['enctype' => 'multipart/form-data'],
-            'action' => "/pages-admin/grand-header/add",
+            'action' => "/widget-content/admin/new",
         ]) ?>
         <?php if (array_key_exists('fields', $widget)) : ?>
             <?php foreach ($widget['fields'] as $key => $value) : ?>
@@ -32,6 +32,11 @@ $ckeditorPath = Yii::$app->getModule('widget-content')->ckeditorPath;
                     <?= $form->field($formModel, $key)->textarea(['rows' => 6, 'class' => 'ckStandart', 'data-ckconf' => $ckeditorConfig, 'data-ckpath' => $ckeditorPath]) ?>
                 <?php endif ?>
             <?php endforeach ?>
+            <?= $form->field($formModel, 'model_name')->hiddenInput()->label(false) ?>
+            <?= $form->field($formModel, 'item_id')->hiddenInput()->label(false) ?>
+            <?= $form->field($formModel, 'type')->hiddenInput()->label(false) ?>
+            <?= $form->field($formModel, 'widget')->hiddenInput()->label(false) ?>
+            <?= $form->field($formModel, 'url')->hiddenInput()->label(false) ?>
         <?php endif ?>
         <div class="form-group">
             <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>

@@ -3,6 +3,7 @@
 use alex290\widgetContent\assets\ContWidgetAsset;
 use alex290\widgetContent\models\ContentWidget;
 use yii\helpers\Json;
+use yii\helpers\Url;
 
 ContWidgetAsset::register(Yii::$app->view);
 
@@ -28,7 +29,7 @@ $models = ContentWidget::find()->andWhere(['model_name' => $modelName])->andWher
                                         </div>
                                         <div class="card-body">
                                             <h5 class="card-title"><?= $valueWidget['name'] ?></h5>
-                                            <button href="#" class="btn btn-primary" onclick='pagesAddContWidget(<?= Json::encode([$modelName, $itemId, $key, $valueWidget]) ?>)'>Добавить</button>
+                                            <button href="#" class="btn btn-primary" onclick='pagesAddContWidget(<?= Json::encode([$modelName, $itemId, $key, $valueWidget, Url::to()]) ?>)'>Добавить</button>
                                         </div>
                                     </div>
                                 </div>
