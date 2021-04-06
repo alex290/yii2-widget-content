@@ -89,9 +89,11 @@ attach behaviour to your model (be sure that your model has "id" property)
 
 ['string'] - Текстовая область
 
+['integer'] - Целое число
+
 ['image'] - Изображение
 
-['file'] - Файлы
+['file'] - Файл 
 
 ['select'] - Список 
 
