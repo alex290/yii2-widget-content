@@ -83,6 +83,27 @@ attach behaviour to your model (be sure that your model has "id" property)
 
 ----------
 
+Типы полей:
+
+['string', 'max' => 255] - Текстовое поле
+
+['string'] - Текстовая область
+
+['image'] - Изображение
+
+['file'] - Файлы
+
+['select'] - Список 
+
+    ...
+    'category' => ['select', [
+        '44' => 'News',
+        '55' => 'Information',
+    ]], 
+
+----------
+
+
     <?php if (!$model->isNewRecord) : ?>
     		<?= $model->getWidget($widget) ?>
     <?php endif ?>
