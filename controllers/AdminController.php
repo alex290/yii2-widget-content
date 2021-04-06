@@ -3,6 +3,7 @@
 namespace alex290\widgetContent\controllers;
 
 use alex290\widgetContent\models\ContentWidget;
+use alex290\widgetContent\models\ContentWidgetItem;
 use Yii;
 use yii\base\DynamicModel;
 use yii\helpers\Json;
@@ -105,21 +106,95 @@ class AdminController extends Controller
                     $filePath = Yii::$app->getModule('widget-content')->path;
                     $path = $filePath . '/' . $uploadedFile->baseName . '.' . $uploadedFile->extension;
                     $uploadedFile->saveAs($path);
-                    // debug($path);
                     $model->attachImage($path);
                     unlink($path);
                 }
             }
 
 
-            // debug($widget);
-            // debug($data);
-            // debug($uploadedFile);
-
             return $this->redirect($url);
         }
 
 
         return true;
+    }
+
+    public function actionUpdate()
+    {
+
+        $url = Yii::$app->request->get('url');
+        $id = Yii::$app->request->get('id');
+        $widget = Json::decode(Yii::$app->request->get('widget'));
+
+        $model = ContentWidget::findOne($id);
+
+        // debug($widget);
+        // die;
+
+        $data = Json::decode($model->data);
+        
+
+
+        $feild = [];
+        $formModel = null;
+        if (!empty($data)) {
+            foreach ($data as $key => $value) {
+                $feild[] = $key;
+            }
+
+            $feild[] = 'widget';
+            $feild[] = 'url';
+
+            $formModel = new DynamicModel($feild);
+
+            foreach ($data as $key => $value) {
+                // debug($widget[$key]);
+                if (array_key_exists('max', $widget[$key])) $formModel->addRule($key, $widget[$key][0], ['max' => $widget[$key]['max']]);
+                else $formModel->addRule($key, $widget[$key][0]);
+                $formModel->$key = $value;
+            }
+
+            // die;
+
+            $formModel->addRule('widget', 'safe');
+            $formModel->addRule('url', 'string', ['max' => 255]);
+
+            $formModel->widget = Json::encode($widget);
+            $formModel->url = $url;
+        }
+        $this->layout = false;
+
+        return $this->render('update', [
+            'widget' => $widget,
+            'formModel' => $formModel
+        ]);
+    }
+
+    public function actionDelete()
+    {
+        $id = Yii::$app->request->get('id');
+        $url = Yii::$app->request->get('url');
+
+        $modelsItem = ContentWidgetItem::find()->where(['content_id' => $id])->all();
+        if ($modelsItem != null) {
+            foreach ($modelsItem as $key => $value) {
+                $value->removeImages();
+                $value->delete();
+            }
+        }
+
+        $model = ContentWidget::findOne($id);
+        $model->removeImages();
+        $model->delete();
+
+        $models = ContentWidget::find()->orderBy(['weight' => SORT_ASC])->all();
+        if ($models != null) {
+            foreach ($models as $key => $value) {
+                $value->weight = $key;
+                $value->save();
+            }
+        }
+
+        return $this->redirect($url);
     }
 }

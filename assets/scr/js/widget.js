@@ -56,6 +56,21 @@ function pagesAddContWidget(data) {
     });
 }
 
+function showEditWidget(data) {
+    $.ajax({
+        type: "GET",
+        url: "/widget-content/admin/update",
+        data: { 'id': data[0], 'url': data[2], 'widget': JSON.stringify(data[1]) },
+        success: function(response) {
+            showRemove();
+            $('.get_cont_update_widget_' + data[0]).html(response);
+            ckeditSt();
+            fileInpurAjax('image-fileinput');
+            disabSort();
+        }
+    });
+}
+
 function ckeditSt() {
     $('.ckStandart').each(function(index, element) {
         let ckpath = $(this).data('ckpath');
@@ -110,4 +125,11 @@ function fileInpurAjaxPrew(classItem) {
 
 function widgetClose() {
     document.location.reload();
+}
+
+function showRemove() {
+    $('.showRemove').each(function(index, element) {
+        element.remove();
+    });
+
 }

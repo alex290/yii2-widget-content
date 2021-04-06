@@ -11,7 +11,16 @@ $models = ContentWidget::find()->andWhere(['model_name' => $modelName])->andWher
 // debug($widget);
 
 ?>
-
+<div class="row">
+    <?php if ($models != null) : ?>
+        <?php foreach ($models as $key => $model) : ?>
+            <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/item', [
+                'widget' => $widget[$model->type],
+                'model' => $model
+            ]) ?>
+        <?php endforeach ?>
+    <?php endif ?>
+</div>
 <div class="row">
     <div class="col-12 d-flex align-items-center flex-column">
         <div class="w-100 get_cont_add_widget"></div>
