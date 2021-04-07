@@ -3,6 +3,7 @@
 namespace alex290\widgetContent\models;
 
 use Yii;
+use yii\helpers\FileHelper;
 use yii\helpers\Json;
 
 /**
@@ -37,14 +38,14 @@ class ContentWidget extends \yii\db\ActiveRecord
     }
 
     public $imageFile;
-    
+
     public function rules()
     {
         return [
-            [['weight', 'modelName', 'itemId', 'type', 'data'], 'required'],
-            [['weight', 'itemId', 'type'], 'integer'],
+            [['weight', 'model_name', 'item_id', 'type', 'data'], 'required'],
+            [['weight', 'item_id'], 'integer'],
             [['data'], 'safe'],
-            [['modelName'], 'string', 'max' => 150],
+            [['model_name', 'type'], 'string', 'max' => 150],
             [['imageFile'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
@@ -58,8 +59,8 @@ class ContentWidget extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'weight' => 'Weight',
-            'modelName' => 'Model Name',
-            'itemId' => 'Item ID',
+            'model_name' => 'Model Name',
+            'item_id' => 'Item ID',
             'type' => 'Type',
             'data' => 'Data',
         ];
@@ -72,13 +73,14 @@ class ContentWidget extends \yii\db\ActiveRecord
      */
     public function getcontentWidgetItems()
     {
-        return $this->hasMany(ContentWidgetItem::className(), ['contentId' => 'id']);
+        return $this->hasMany(ContentWidgetItem::className(), ['content_id' => 'id']);
     }
 
     public function upload()
     {
+        $filePath = Yii::$app->getModule('widget-content')->path;
         if ($this->validate()) {
-            $path = 'upload/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+            $path = $filePath . '/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
             $this->imageFile->saveAs($path);
             $this->attachImage($path);
             unlink($path);
@@ -86,5 +88,39 @@ class ContentWidget extends \yii\db\ActiveRecord
         } else {
             return false;
         }
+    }
+
+
+
+
+
+
+    public function saveFile($fileData)
+    {
+        $data = Json::decode($this->data);
+        // debug($fileData);
+        // die;
+        $filePath = Yii::$app->getModule('widget-content')->path;
+        $this->deleteFile();
+        $dir = $filePath . '/files/ContentWidget/ContentWidget' . $this->id . '/';
+        FileHelper::createDirectory($dir);
+        $file = $fileData[0]->baseName . '.' . $fileData[0]->extension;
+        $path = $dir . $file;
+        $fileData[0]->saveAs($path);
+        // debug($dir);
+        // die;
+        $newPath = $dir . Yii::$app->getSecurity()->generateRandomString(6) . '.' . $fileData[0]->extension;
+        rename($path, $newPath);
+        $data[$fileData[1]] = $newPath;
+
+        $this->data = Json::encode($data);
+        $this->save();
+    }
+
+    public function deleteFile()
+    {
+        $filePath = Yii::$app->getModule('widget-content')->path;
+        $dir = $filePath . '/files/ContentWidget/ContentWidget' . $this->id;
+        FileHelper::removeDirectory($dir);
     }
 }

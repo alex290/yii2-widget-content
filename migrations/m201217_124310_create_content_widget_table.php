@@ -15,9 +15,9 @@ class m201217_124310_create_content_widget_table extends Migration
         $this->createTable('{{%content_widget}}', [
             'id' => $this->primaryKey()->unsigned(),
             'weight' => $this->integer()->unsigned()->notNull(),
-            'modelName' => $this->string(150)->notNull(),
-            'itemId' => $this->integer()->unsigned()->notNull(),
-            'type' => $this->integer()->notNull(),
+            'model_name' => $this->string(150)->notNull(),
+            'item_id' => $this->integer()->unsigned()->notNull(),
+            'type' => $this->string(150)->notNull(),
             'data' => $this->json()->notNull(),
         ]);
 

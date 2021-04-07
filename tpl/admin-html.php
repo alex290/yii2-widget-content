@@ -2,66 +2,51 @@
 
 use alex290\widgetContent\assets\ContWidgetAsset;
 use alex290\widgetContent\models\ContentWidget;
-use alex290\widgetContent\models\WidgetDoc;
 use yii\helpers\Json;
+use yii\helpers\Url;
 
 ContWidgetAsset::register(Yii::$app->view);
 
-$models = ContentWidget::find()->andWhere(['modelName' => $modelName])->andWhere(['itemId' => $itemId])->orderBy(['weight' => SORT_ASC])->all();
-$data = Json::encode([
-    'patch' => $subdir,
-    'model' => $modelName,
-    'id' => $itemId,
-    'url' => $url,
-]);
+$models = ContentWidget::find()->andWhere(['model_name' => $modelName])->andWhere(['item_id' => $itemId])->orderBy(['weight' => SORT_ASC])->all();
+// debug($widget);
 
 ?>
-
-
-<?php if ($models != null) : ?>
-    <div class="sortableWidgetContent">
-        <?php foreach ($models as $key => $widget) : ?>
-            <div class="card sortableWidgetContentItem" data-id=<?= $widget->id ?>>
-                <?php if ($widget->type == 1) : ?>
-                    <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/text', [
-                        'widget' => $widget,
-                    ]) ?>
-
-                <?php elseif ($widget->type == 2) : ?>
-                    <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/image', [
-                        'widget' => $widget,
-                    ]) ?>
-                <?php elseif ($widget->type == 3) : ?>
-                    <?php $dataFile = Json::decode($widget->data) ?>
-                    <?php if ($dataFile['file'] == null || $dataFile['file'] == '') : ?>
-                        <?php
-                        $articleDoc = new WidgetDoc();
-                        $articleDoc->openModel($widget->id);
-                        $articleDoc->deleteFile();
-                        $widget->removeImages();
-                        $widget->delete(); 
-                        ?>
-                    <?php else : ?>
-                        <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/doc', [
-                            'widget' => $widget,
-                        ]) ?>
-                    <?php endif ?>
-                <?php endif ?>
-            </div>
+<div class="row" id="itemsSort">
+    <?php if ($models != null) : ?>
+        <?php foreach ($models as $key => $model) : ?>
+            <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/item', [
+                'widget' => $widget[$model->type],
+                'model' => $model
+            ]) ?>
         <?php endforeach ?>
-    </div>
-<?php endif ?>
-<div class="float-left w-100 newContent"></div>
-<div class="float-left w-100 d-flex justify-content-center mt-5 wdgetAddBtn">
-    <button type="button" class="btn btn-outline-dark" data-toggle="collapse" data-target="#collapseWidgetContent" aria-expanded="false" aria-controls="collapseWidgetContent"><i class="fas fa-plus"></i></button>
+    <?php endif ?>
 </div>
-
-<div class="collapse" id="collapseWidgetContent">
-    <div class="card card-body">
-        <div class="d-flex flex-wrap">
-            <button type="button" class="btn btn-outline-dark btn-lg mr-3 ml-3 mb-4" onclick='addWidgetText(<?= $data ?>)'>Текст</button>
-            <button type="button" class="btn btn-outline-dark btn-lg mr-3 ml-3 mb-4" onclick='addWidgetImage(<?= $data ?>)'>Изображение</button>
-            <button type="button" class="btn btn-outline-dark btn-lg mr-3 ml-3 mb-4" onclick='addWidgetDoc(<?= $data ?>)'>Файл(Документ)</button>
+<div class="row">
+    <div class="col-12 d-flex align-items-center flex-column">
+        <div class="w-100 get_cont_add_widget"></div>
+        <div class="w-100 d-flex align-items-center flex-column showRemove">
+            <button class="btn_add_pages mb-5" onclick="showWodgetGrantPage()"><i class="fas fa-plus"></i></button>
+            <div class="widget_add_cont w-100">
+                <div class="card card-body w-100">
+                    <div class="carusel_widget">
+                        <?php if (!empty($widget)) : ?>
+                            <?php foreach ($widget as $key => $valueWidget) : ?>
+                                <div class="pl-3 pr-3">
+                                    <div class="card">
+                                        <div class="card-img-widg">
+                                            <div class="img" alt="..." style="background-image: url(<?= $valueWidget['preview'] ?>);"></div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title"><?= $valueWidget['name'] ?></h5>
+                                            <button href="#" class="btn btn-primary" onclick='pagesAddContWidget(<?= Json::encode([$modelName, $itemId, $key, $valueWidget, Url::to()]) ?>)'>Добавить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach ?>
+                        <?php endif ?>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

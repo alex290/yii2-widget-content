@@ -8,70 +8,55 @@ use alex290\widgetContent\Rules;
 use Yii;
 use yii\base\DynamicModel;
 use yii\helpers\Json;
-use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 
-class AdminController extends Controller
+class ItemController extends Controller
 {
-
     public function actionAdd()
     {
         $widget = Json::decode(Yii::$app->request->post('widget'));
-        $modelName = Yii::$app->request->post('model');
-        $keyType = Yii::$app->request->post('key');
         $url = Yii::$app->request->post('url');
         $id = Yii::$app->request->post('id');
+
+        // debug($widget);
         $feild = [];
         $formModel = null;
-        if (array_key_exists('fields', $widget)) {
-            foreach ($widget['fields'] as $key => $value) {
+
+        $this->layout = false;
+
+        if (array_key_exists('item', $widget)) {
+            foreach ($widget['item'] as $key => $value) {
                 $feild[] = $key;
             }
-            $feild[] = 'model_name';
-            $feild[] = 'item_id';
-            $feild[] = 'type';
+            $feild[] = 'content_id';
             $feild[] = 'widget';
             $feild[] = 'url';
 
 
-            $formModel = Rules::add(new DynamicModel($feild), $widget['fields']);
-            
-            $formModel->addRule('model_name', 'string', ['max' => 255]);
-            $formModel->addRule('item_id', 'integer');
-            $formModel->addRule('type', 'string', ['max' => 255]);
+            $formModel = Rules::add(new DynamicModel($feild), $widget['item']);
+
+            $formModel->addRule('content_id', 'integer');
             $formModel->addRule('widget', 'safe');
             $formModel->addRule('url', 'string', ['max' => 255]);
 
-            $formModel->model_name = $modelName;
-            $formModel->item_id = $id;
-            $formModel->type = $keyType;
-            $formModel->widget = Json::encode($widget['fields']);
+            $formModel->content_id = $id;
+            $formModel->widget = Json::encode($widget['item']);
             $formModel->url = $url;
         }
-        $this->layout = false;
-        // debug($url);
-
-        $modelName = new ContentWidget();
-        $modelName->model_name = $modelName;
-        $modelName->item_id = $id;
-        $modelName->type = $keyType;
-
-
-
         return $this->render('add', [
             'widget' => $widget,
             'formModel' => $formModel
         ]);
     }
-
     public function actionNew()
     {
 
         if ($data = Yii::$app->request->post()['DynamicModel']) {
             $widget = Json::decode($data['widget']);
-            $uploadedFile = null;
             $uploadedDoc = [];
+
+            $uploadedFile = null;
             foreach ($widget as $key => $value) {
                 if ($value[0] == 'image') {
                     $uploadedFile = UploadedFile::getInstanceByName('DynamicModel[' . $key . ']');
@@ -80,23 +65,18 @@ class AdminController extends Controller
                     $uploadedDoc = [UploadedFile::getInstanceByName('DynamicModel[' . $key . ']'), $key];
                 }
             }
-            $modelName = $data['model_name'];
-            $itemId = $data['item_id'];
-            $type = $data['type'];
+            $contentId = $data['content_id'];
             $url = $data['url'];
-            unset($data['model_name']);
-            unset($data['item_id']);
-            unset($data['type']);
+            unset($data['content_id']);
             unset($data['url']);
             unset($data['widget']);
 
-            // $model = ContentWidget::find()->andWhere(['model_name' => $modelName])->andWhere(['type' => $type])->andWhere(['item_id' => $itemId])->one();
+            // debug($uploadedFile);
+            // die;
 
-            $model = new ContentWidget();
-            $model->model_name = $modelName;
-            $model->type = $type;
-            $model->item_id = $itemId;
-            $model->weight = ContentWidget::find()->andWhere(['model_name' => $modelName])->andWhere(['item_id' => $itemId])->count();
+            $model = new ContentWidgetItem();
+            $model->content_id = $contentId;
+            $model->weight = ContentWidgetItem::find()->where(['content_id' => $contentId])->count();
             $model->data = Json::encode($data);
             if ($model->save()) {
                 if ($uploadedFile) {
@@ -128,13 +108,16 @@ class AdminController extends Controller
 
         $img = false;
 
-        foreach ($widget['fields'] as $key => $value) {
+        foreach ($widget['item'] as $key => $value) {
             if ($value[0] == 'image') {
                 $img = true;
             }
         }
 
-        $model = ContentWidget::findOne($id);
+        $model = ContentWidgetItem::findOne($id);
+
+        // debug($widget);
+        // die;
 
         $data = Json::decode($model->data);
 
@@ -154,8 +137,7 @@ class AdminController extends Controller
             $feild[] = 'url';
             $feild[] = 'id';
 
-
-            $formModel = Rules::update(new DynamicModel($feild), $data, $widget['fields']);
+            $formModel = Rules::update(new DynamicModel($feild), $data, $widget['item']);
 
             if ($img == true) {
                 $formModel->addRule('image', 'file', ['extensions' => 'png, jpg']);
@@ -176,49 +158,18 @@ class AdminController extends Controller
         return $this->render('update', [
             'widget' => $widget,
             'formModel' => $formModel,
-            'model' => $model
+            'model' => $model,
         ]);
     }
-
-    public function actionDelete()
-    {
-        $id = Yii::$app->request->get('id');
-        $url = Yii::$app->request->get('url');
-
-        $modelsItem = ContentWidgetItem::find()->where(['content_id' => $id])->all();
-        if ($modelsItem != null) {
-            foreach ($modelsItem as $key => $value) {
-                $value->removeImages();
-                $value->deleteFile();
-                $value->delete();
-            }
-        }
-
-        $model = ContentWidget::findOne($id);
-        $modelName = $model->model_name;
-        $itemId = $model->item_id;
-        $model->removeImages();
-        $model->deleteFile();
-        $model->delete();
-
-        $models = ContentWidget::find()->andWhere(['model_name' => $modelName])->andWhere(['item_id' => $itemId])->orderBy(['weight' => SORT_ASC])->all();
-        if ($models != null) {
-            foreach ($models as $key => $value) {
-                $value->weight = $key;
-                $value->save();
-            }
-        }
-
-        return $this->redirect($url);
-    }
-
 
     public function actionSave()
     {
 
         if ($data = Yii::$app->request->post()['DynamicModel']) {
 
-            $model = ContentWidget::findOne($data['id']);
+            $model = ContentWidgetItem::findOne($data['id']);
+
+            
             unset($data['id']);
             $widget = Json::decode($data['widget']);
             unset($data['widget']);
@@ -228,7 +179,7 @@ class AdminController extends Controller
 
             $uploadedDoc = [];
             $uploadedFile = null;
-            foreach ($widget['fields'] as $key => $value) {
+            foreach ($widget['item'] as $key => $value) {
                 if ($value[0] == 'image') {
                     $uploadedFile = UploadedFile::getInstanceByName('DynamicModel[' . $key . ']');
                     unset($data[$key]);
@@ -236,6 +187,8 @@ class AdminController extends Controller
                     $uploadedDoc = [UploadedFile::getInstanceByName('DynamicModel[' . $key . ']'), $key];
                 }
             }
+            // debug($data);
+            // die;
 
             $model->data = Json::encode($data);
             if ($model->save()) {
@@ -255,8 +208,26 @@ class AdminController extends Controller
 
             return $this->redirect($url);
         }
+    }
 
+    public function actionDelete()
+    {
+        $id = Yii::$app->request->get('id');
+        $url = Yii::$app->request->get('url');
 
-        return true;
+        $model = ContentWidgetItem::findOne($id);
+        $contentId = $model->content_id;
+        $model->removeImages();
+        $model->delete();
+
+        $models = ContentWidgetItem::find()->where(['content_id' => $contentId])->orderBy(['weight' => SORT_ASC])->all();
+        if ($models != null) {
+            foreach ($models as $key => $value) {
+                $value->weight = $key;
+                $value->save();
+            }
+        }
+
+        return $this->redirect($url);
     }
 }
