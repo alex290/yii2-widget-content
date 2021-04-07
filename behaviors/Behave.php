@@ -7,6 +7,7 @@ namespace alex290\widgetContent\behaviors;
 // use alex290\yii2images\models\Image;
 
 use alex290\widgetContent\models\ContentWidget;
+use alex290\widgetContent\models\ContentWidgetItem;
 use alex290\widgetContent\models\WidgetDoc;
 use Yii;
 use yii\base\Behavior;
@@ -45,24 +46,20 @@ class Behave extends Behavior
         $data = explode("\\", $modelNamePath);
         $modelName = $data[(count($data) - 1)];
 
-        $modelWidget = ContentWidget::find()->andWhere(['itemId' => $model->id])->andWhere(['modelName' => $modelName])->orderBy(['weight' => SORT_ASC])->all();
+        $content = [];
+
+        $modelWidget = ContentWidget::find()->andWhere(['item_id' => $model->id])->andWhere(['model_name' => $modelName])->orderBy(['weight' => SORT_ASC])->all();
         if ($modelWidget != null) {
             foreach ($modelWidget as $key => $value) {
-                if ($value->type == 3) {
-                    $dataFile = Json::decode($value->data);
-                    if ($dataFile['file'] == null || $dataFile['file'] == ''){
-                        $articleDoc = new WidgetDoc();
-                        $articleDoc->openModel($value->id);
-                        $articleDoc->deleteFile();
-                        $value->removeImages();
-                        $value->delete(); 
-                    }
-                }
+                    $modelWidgetItem = ContentWidgetItem::find()->where(['content_id' => $value->id])->orderBy(['weight' => SORT_ASC])->all();
+                    $content[] = [
+                        'model' => $value,
+                        'item' => $modelWidgetItem,
+                    ];
             }
         }
-        $modelWidget = ContentWidget::find()->andWhere(['itemId' => $model->id])->andWhere(['modelName' => $modelName])->orderBy(['weight' => SORT_ASC])->all();
 
-        return $modelWidget;
+        return $content;
     }
 
     public function removeWidgetAll()
@@ -76,29 +73,47 @@ class Behave extends Behavior
 
         if ($modelWidgets != null) {
             foreach ($modelWidgets as $key => $value) {
-                if ($value->type == 3) {
-                    $articleDoc = new WidgetDoc();
-                    $articleDoc->openModel($value->id);
-                    $articleDoc->deleteFile();
+                $modelsItem = ContentWidgetItem::find()->where(['content_id' => $value->id])->all();
+                if ($modelsItem != null) {
+                    foreach ($modelsItem as $keyItem => $valueItem) {
+                        $valueItem->removeImages();
+                        $valueItem->deleteFile();
+                        $valueItem->delete();
+                    }
                 }
+        
                 $value->removeImages();
+                $value->deleteFile();
                 $value->delete();
+    
             }
         }
     }
 
     public function removeWidget($id)
     {
-        $modelWidget = ContentWidget::findOne($id);
-        if ($modelWidget != null) {
-
-            if ($modelWidget->type == 3) {
-                $articleDoc = new WidgetDoc();
-                $articleDoc->openModel($modelWidget->id);
-                $articleDoc->deleteFile();
+        $modelsItem = ContentWidgetItem::find()->where(['content_id' => $id])->all();
+        if ($modelsItem != null) {
+            foreach ($modelsItem as $key => $value) {
+                $value->removeImages();
+                $value->deleteFile();
+                $value->delete();
             }
-            $modelWidget->removeImages();
-            $modelWidget->delete();
+        }
+
+        $model = ContentWidget::findOne($id);
+        $modelName = $model->model_name;
+        $itemId = $model->item_id;
+        $model->removeImages();
+        $model->deleteFile();
+        $model->delete();
+
+        $models = ContentWidget::find()->andWhere(['model_name' => $modelName])->andWhere(['item_id' => $itemId])->orderBy(['weight' => SORT_ASC])->all();
+        if ($models != null) {
+            foreach ($models as $key => $value) {
+                $value->weight = $key;
+                $value->save();
+            }
         }
     }
 

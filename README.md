@@ -124,21 +124,24 @@ attach behaviour to your model (be sure that your model has "id" property)
 Выводить записи на странице
     
     <?php if ($model->getContent() != null) : ?>
-        <?php foreach ($model->getContent() as $key => $widget) : ?>
-                <?php if ($widget->type == 1) : ?>
-                    <?php $data = Json::decode($widget->data) ?>
-                    <!-- Выводим текст ($data['text']) -->
-                <?php elseif ($widget->type == 2) : ?>
-                    <?php $data = Json::decode($widget->data) ?>
-                    <!-- Выводим изображение -->
-                    <!-- $widget->getImage()->GetPath() -->
-                    <!-- Заголовок изображения ($data['title']) -->
-                <?php elseif ($widget->type == 3) : ?>
-                    <?php $data = Json::decode($widget->data) ?>
-                    <!-- Выводим файлы -->
-                    <a href="/web/<?= $data['file'] ?>" download="<?= $data['fileName'] ?>"><?= $data['title'] ?></a>
-                <?php endif ?>
+        <?php foreach ($model->getContent() as $widget) : ?>
 
+            <?php 
+            $element = $widget['model']; // Основной виджет
+            $elementItem = $widget['item']; // Элементы виджета
+            $data = Json::decode($element->data); // Поля виджета
+            ?>
+            <?php if ($element->getImage()->getPrimaryKey() > 0): ?>
+                <img src="/web/<?= $element->getImage()->getPath() ?>" alt="">
+            <?php endif ?>
+            <?php if (!empty($elementItem)) : ?>
+                <?php foreach ($elementItem as $widgetItem) : ?>
+                    <?php $dataItem = Json::decode($widgetItem->data); // Поля элемента виджета ?>
+                    <?php if ($widgetItem->getImage()->getPrimaryKey() > 0): ?>
+                        <img src="/web/<?= $element->getImage()->getPath() ?>" alt="">
+                    <?php endif ?>
+                <?php endforeach ?>
+            <?php endif ?>
         <?php endforeach ?>
     <?php endif ?>
     
