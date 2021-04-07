@@ -125,23 +125,24 @@ attach behaviour to your model (be sure that your model has "id" property)
     
     <?php if ($model->getContent() != null) : ?>
         <?php foreach ($model->getContent() as $widget) : ?>
-
-            <?php 
-            $element = $widget['model']; // Основной виджет
-            $elementItem = $widget['item']; // Элементы виджета
-            $data = Json::decode($element->data); // Поля виджета
-            ?>
-            <?php if ($element->getImage()->getPrimaryKey() > 0): ?>
-                <img src="/web/<?= $element->getImage()->getPath() ?>" alt="">
-            <?php endif ?>
-            <?php if (!empty($elementItem)) : ?>
-                <?php foreach ($elementItem as $widgetItem) : ?>
-                    <?php $dataItem = Json::decode($widgetItem->data); // Поля элемента виджета ?>
-                    <?php if ($widgetItem->getImage()->getPrimaryKey() > 0): ?>
-                        <img src="/web/<?= $element->getImage()->getPath() ?>" alt="">
-                    <?php endif ?>
-                <?php endforeach ?>
-            <?php endif ?>
+            <div class="row">
+                <?php
+                $element = $widget['model']; // Основной виджет
+                $elementItem = $widget['item']; // Элементы виджета
+                $data = Json::decode($element->data); // Поля виджета
+                ?>
+                <?php if ($element->getImage()->getPrimaryKey() > 0) : // Вывод изображения ?>
+                    <img src="/web/<?= $element->getImage()->getPath() ?>" alt="">
+                <?php endif ?>
+                <?php if (!empty($elementItem)) : ?>
+                    <?php foreach ($elementItem as $widgetItem) : ?>
+                        <?php $dataItem = Json::decode($widgetItem->data); // Поля элемента виджета  ?>
+                        <?php if ($widgetItem->getImage()->getPrimaryKey() > 0) : // Вывод изображения ?>
+                            <img src="/web/<?= $widgetItem->getImage()->getPath() ?>" alt="">
+                        <?php endif ?>
+                    <?php endforeach ?>
+                <?php endif ?>
+            </div>
         <?php endforeach ?>
     <?php endif ?>
     
