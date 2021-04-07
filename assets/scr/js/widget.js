@@ -19,6 +19,14 @@ if (itemsSort) {
 
 }
 
+function disabSort() {
+    var state = sortable.option("disabled"); // get
+
+    sortable.option("disabled", !state); // set
+
+    switcher.innerHTML = state ? 'disable' : 'enable';
+}
+
 
 $(document).ready(function() {
     $('.carusel_widget').slick({
@@ -53,6 +61,7 @@ function pagesAddContWidget(data) {
             ckeditSt('ckStandart');
             fileInpurAjax('image-fileinput');
             showRemove();
+            disabSort();
         }
     });
 }
@@ -72,6 +81,7 @@ function addWidgetItem(data) {
             ckeditSt('ckStandartItem');
             fileInpurAjax('image-fileinput');
             showRemove();
+            disabSort();
         }
     });
 }

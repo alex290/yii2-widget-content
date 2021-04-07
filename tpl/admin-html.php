@@ -11,7 +11,7 @@ $models = ContentWidget::find()->andWhere(['model_name' => $modelName])->andWher
 // debug($widget);
 
 ?>
-<div class="row">
+<div class="row" id="itemsSort">
     <?php if ($models != null) : ?>
         <?php foreach ($models as $key => $model) : ?>
             <?= Yii::$app->view->render('@alex290/widgetContent/tpl/widget/item', [
