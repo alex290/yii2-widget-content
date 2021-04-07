@@ -70,7 +70,7 @@ function pagesAddContWidget(data) {
 function addWidgetItem(data) {
     // console.log(data);
     // let datArr = JSON.parse(data);
-    console.log(data[4]);
+    // console.log(data[4]);
     $.ajax({
         type: "POST",
         url: "/widget-content/item/add",
@@ -96,6 +96,25 @@ function showEditWidget(data) {
             $('.get_cont_update_widget_' + data[0]).html(response);
             ckeditSt('ckStandart');
             fileInpurAjaxPrew('image-fileinput');
+            disabSort();
+        }
+    });
+}
+
+function showEditWidgetItem(data) {
+    // console.log(data);
+    // let datArr = JSON.parse(data);
+    // console.log(data[4]);
+    $.ajax({
+        type: "POST",
+        url: "/widget-content/item/update",
+        data: { 'widget': JSON.stringify(data[1]), 'id': data[0], 'url': data[2] },
+        success: function(response) {
+            let htmlOb = document.querySelector('.get_cont_update_widget_item' + data[0]);
+            htmlOb.innerHTML = response;
+            ckeditSt('ckStandartItem');
+            fileInpurAjaxPrew('image-fileinput');
+            showRemove();
             disabSort();
         }
     });

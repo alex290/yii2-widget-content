@@ -101,6 +101,118 @@ class ItemController extends Controller
         return true;
     }
 
+    public function actionUpdate()
+    {
+
+        $url = Yii::$app->request->post('url');
+        $id = Yii::$app->request->post('id');
+        $widget = Json::decode(Yii::$app->request->post('widget'));
+
+        $img = false;
+
+        foreach ($widget['item'] as $key => $value) {
+            if ($value[0] == 'image') {
+                $img = true;
+            }
+        }
+
+        $model = ContentWidgetItem::findOne($id);
+
+        // debug($widget);
+        // die;
+
+        $data = Json::decode($model->data);
+
+
+
+        $feild = [];
+        $formModel = null;
+        if (!empty($data)) {
+            foreach ($data as $key => $value) {
+                $feild[] = $key;
+            }
+            if ($img == true) {
+                $feild[] = 'image';
+            }
+
+            $feild[] = 'widget';
+            $feild[] = 'url';
+            $feild[] = 'id';
+
+            $formModel = new DynamicModel($feild);
+
+            foreach ($data as $key => $value) {
+                // debug($widget[$key]);
+                if (array_key_exists('max', $widget['item'][$key])) $formModel->addRule($key, $widget['item'][$key][0], ['max' => $widget['item'][$key]['max']]);
+                else $formModel->addRule($key, $widget['item'][$key][0]);
+                $formModel->$key = $value;
+            }
+            if ($img == true) {
+                $formModel->addRule('image', 'file', ['extensions' => 'png, jpg']);
+            }
+
+            // die;
+
+            $formModel->addRule('widget', 'safe');
+            $formModel->addRule('id', 'integer');
+            $formModel->addRule('url', 'string', ['max' => 255]);
+
+            $formModel->widget = Json::encode($widget);
+            $formModel->url = $url;
+            $formModel->id = $id;
+        }
+        $this->layout = false;
+
+        return $this->render('update', [
+            'widget' => $widget,
+            'formModel' => $formModel,
+            'model' => $model,
+        ]);
+    }
+
+    public function actionSave()
+    {
+
+        if ($data = Yii::$app->request->post()['DynamicModel']) {
+
+            $model = ContentWidgetItem::findOne($data['id']);
+
+            
+            unset($data['id']);
+            $widget = Json::decode($data['widget']);
+            unset($data['widget']);
+            $url = $data['url'];
+            unset($data['url']);
+
+
+
+            $uploadedFile = null;
+            foreach ($widget['item'] as $key => $value) {
+                if ($value[0] == 'image') {
+                    $uploadedFile = UploadedFile::getInstanceByName('DynamicModel[' . $key . ']');
+                    unset($data[$key]);
+                }
+            }
+            // debug($data);
+            // die;
+
+            $model->data = Json::encode($data);
+            if ($model->save()) {
+                if ($uploadedFile) {
+                    $model->removeImages();
+                    $filePath = Yii::$app->getModule('widget-content')->path;
+                    $path = $filePath . '/' . $uploadedFile->baseName . '.' . $uploadedFile->extension;
+                    $uploadedFile->saveAs($path);
+                    $model->attachImage($path);
+                    unlink($path);
+                }
+            }
+
+
+            return $this->redirect($url);
+        }
+    }
+
     public function actionDelete()
     {
         $id = Yii::$app->request->get('id');
