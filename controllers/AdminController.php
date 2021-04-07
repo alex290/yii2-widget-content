@@ -71,10 +71,13 @@ class AdminController extends Controller
         if ($data = Yii::$app->request->post()['DynamicModel']) {
             $widget = Json::decode($data['widget']);
             $uploadedFile = null;
+            $uploadedDoc = [];
             foreach ($widget as $key => $value) {
                 if ($value[0] == 'image') {
                     $uploadedFile = UploadedFile::getInstanceByName('DynamicModel[' . $key . ']');
                     unset($data[$key]);
+                } elseif ($value[0] == 'file') {
+                    $uploadedDoc = [UploadedFile::getInstanceByName('DynamicModel[' . $key . ']'), $key];
                 }
             }
             $modelName = $data['model_name'];
@@ -103,6 +106,9 @@ class AdminController extends Controller
                     $model->attachImage($path);
                     unlink($path);
                 }
+                if (!empty($uploadedDoc)) {
+                    $model->saveFile($uploadedDoc);
+                }
             }
 
 
@@ -129,9 +135,6 @@ class AdminController extends Controller
         }
 
         $model = ContentWidget::findOne($id);
-
-        // debug($widget);
-        // die;
 
         $data = Json::decode($model->data);
 
@@ -186,6 +189,7 @@ class AdminController extends Controller
         if ($modelsItem != null) {
             foreach ($modelsItem as $key => $value) {
                 $value->removeImages();
+                $value->deleteFile();
                 $value->delete();
             }
         }
@@ -194,6 +198,7 @@ class AdminController extends Controller
         $modelName = $model->model_name;
         $itemId = $model->item_id;
         $model->removeImages();
+        $model->deleteFile();
         $model->delete();
 
         $models = ContentWidget::find()->andWhere(['model_name' => $modelName])->andWhere(['item_id' => $itemId])->orderBy(['weight' => SORT_ASC])->all();
@@ -221,12 +226,14 @@ class AdminController extends Controller
             unset($data['url']);
 
 
-
+            $uploadedDoc = [];
             $uploadedFile = null;
             foreach ($widget['fields'] as $key => $value) {
                 if ($value[0] == 'image') {
                     $uploadedFile = UploadedFile::getInstanceByName('DynamicModel[' . $key . ']');
                     unset($data[$key]);
+                } elseif ($value[0] == 'file') {
+                    $uploadedDoc = [UploadedFile::getInstanceByName('DynamicModel[' . $key . ']'), $key];
                 }
             }
 
@@ -239,6 +246,9 @@ class AdminController extends Controller
                     $uploadedFile->saveAs($path);
                     $model->attachImage($path);
                     unlink($path);
+                }
+                if (!empty($uploadedDoc)) {
+                    $model->saveFile($uploadedDoc);
                 }
             }
 

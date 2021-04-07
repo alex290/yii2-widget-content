@@ -54,13 +54,15 @@ class ItemController extends Controller
 
         if ($data = Yii::$app->request->post()['DynamicModel']) {
             $widget = Json::decode($data['widget']);
-
+            $uploadedDoc = [];
 
             $uploadedFile = null;
             foreach ($widget as $key => $value) {
                 if ($value[0] == 'image') {
                     $uploadedFile = UploadedFile::getInstanceByName('DynamicModel[' . $key . ']');
                     unset($data[$key]);
+                } elseif ($value[0] == 'file') {
+                    $uploadedDoc = [UploadedFile::getInstanceByName('DynamicModel[' . $key . ']'), $key];
                 }
             }
             $contentId = $data['content_id'];
@@ -83,6 +85,9 @@ class ItemController extends Controller
                     $uploadedFile->saveAs($path);
                     $model->attachImage($path);
                     unlink($path);
+                }
+                if (!empty($uploadedDoc)) {
+                    $model->saveFile($uploadedDoc);
                 }
             }
 
@@ -172,12 +177,14 @@ class ItemController extends Controller
             unset($data['url']);
 
 
-
+            $uploadedDoc = [];
             $uploadedFile = null;
             foreach ($widget['item'] as $key => $value) {
                 if ($value[0] == 'image') {
                     $uploadedFile = UploadedFile::getInstanceByName('DynamicModel[' . $key . ']');
                     unset($data[$key]);
+                } elseif ($value[0] == 'file') {
+                    $uploadedDoc = [UploadedFile::getInstanceByName('DynamicModel[' . $key . ']'), $key];
                 }
             }
             // debug($data);
@@ -192,6 +199,9 @@ class ItemController extends Controller
                     $uploadedFile->saveAs($path);
                     $model->attachImage($path);
                     unlink($path);
+                }
+                if (!empty($uploadedDoc)) {
+                    $model->saveFile($uploadedDoc);
                 }
             }
 
