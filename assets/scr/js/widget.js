@@ -59,7 +59,7 @@ function pagesAddContWidget(data) {
 
 function showEditWidget(data) {
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "/widget-content/admin/update",
         data: { 'id': data[0], 'url': data[2], 'widget': JSON.stringify(data[1]) },
         success: function(response) {
