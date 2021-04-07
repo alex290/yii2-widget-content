@@ -63,7 +63,7 @@ function addWidgetItem(data) {
     // let datArr = JSON.parse(data);
     console.log(data[4]);
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "/widget-content/item/add",
         data: { 'widget': JSON.stringify(data[1]), 'id': data[0], 'url': data[2] },
         success: function(response) {

@@ -50,7 +50,7 @@ $ckeditorPath = Yii::$app->getModule('widget-content')->ckeditorPath;
             <div class="w-100">
                 <?php if ($item != null) : ?>
                     <?php foreach ($item as $key => $valueItem) : ?>
-                        <?= $this->render('widgetItem', ['model' => $valueItem]) ?>
+                        <?= $this->render('widgetItem', ['model' => $valueItem, 'url'=>  $formModel->url]) ?>
                     <?php endforeach ?>
                 <?php endif ?>
             </div>

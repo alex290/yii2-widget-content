@@ -22,6 +22,14 @@ class ContentWidgetItem extends \yii\db\ActiveRecord
     {
         return 'content_widget_item';
     }
+    public function behaviors()
+    {
+        return [
+            'image' => [
+                'class' => 'alex290\yii2images\behaviors\ImageBehave',
+            ]
+        ];
+    }
 
     /**
      * {@inheritdoc}

@@ -202,10 +202,12 @@ class AdminController extends Controller
         }
 
         $model = ContentWidget::findOne($id);
+        $modelName = $model->model_name;
+        $itemId = $model->item_id;
         $model->removeImages();
         $model->delete();
 
-        $models = ContentWidget::find()->orderBy(['weight' => SORT_ASC])->all();
+        $models = ContentWidget::find()->andWhere(['model_name' => $modelName])->andWhere(['item_id' => $itemId])->orderBy(['weight' => SORT_ASC])->all();
         if ($models != null) {
             foreach ($models as $key => $value) {
                 $value->weight = $key;
@@ -228,9 +230,9 @@ class AdminController extends Controller
             unset($data['widget']);
             $url = $data['url'];
             unset($data['url']);
-            
-            
-            
+
+
+
             $uploadedFile = null;
             foreach ($widget['fields'] as $key => $value) {
                 if ($value[0] == 'image') {
@@ -238,11 +240,11 @@ class AdminController extends Controller
                     unset($data[$key]);
                 }
             }
-            
+
             $model->data = Json::encode($data);
             if ($model->save()) {
                 if ($uploadedFile) {
-                    $model->removeImages(); 
+                    $model->removeImages();
                     $filePath = Yii::$app->getModule('widget-content')->path;
                     $path = $filePath . '/' . $uploadedFile->baseName . '.' . $uploadedFile->extension;
                     $uploadedFile->saveAs($path);
