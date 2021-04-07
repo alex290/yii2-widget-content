@@ -4,6 +4,7 @@ namespace alex290\widgetContent\controllers;
 
 use alex290\widgetContent\models\ContentWidget;
 use alex290\widgetContent\models\ContentWidgetItem;
+use alex290\widgetContent\Rules;
 use Yii;
 use yii\base\DynamicModel;
 use yii\helpers\Json;
@@ -32,16 +33,8 @@ class ItemController extends Controller
             $feild[] = 'widget';
             $feild[] = 'url';
 
-            $formModel = new DynamicModel($feild);
 
-            foreach ($widget['item'] as $key => $value) {
-                if ($value[0] == 'image') {
-                    $formModel->addRule($key, 'file', ['extensions' => 'png, jpg']);
-                } else {
-                    if (array_key_exists('max', $value)) $formModel->addRule($key, $value[0], ['max' => $value['max']]);
-                    else $formModel->addRule($key, $value[0]);
-                }
-            }
+            $formModel = Rules::add(new DynamicModel($feild), $widget['item']);
 
             $formModel->addRule('content_id', 'integer');
             $formModel->addRule('widget', 'safe');
@@ -139,14 +132,8 @@ class ItemController extends Controller
             $feild[] = 'url';
             $feild[] = 'id';
 
-            $formModel = new DynamicModel($feild);
+            $formModel = Rules::update(new DynamicModel($feild), $data, $widget['item']);
 
-            foreach ($data as $key => $value) {
-                // debug($widget[$key]);
-                if (array_key_exists('max', $widget['item'][$key])) $formModel->addRule($key, $widget['item'][$key][0], ['max' => $widget['item'][$key]['max']]);
-                else $formModel->addRule($key, $widget['item'][$key][0]);
-                $formModel->$key = $value;
-            }
             if ($img == true) {
                 $formModel->addRule('image', 'file', ['extensions' => 'png, jpg']);
             }

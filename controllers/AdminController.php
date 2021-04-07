@@ -4,6 +4,7 @@ namespace alex290\widgetContent\controllers;
 
 use alex290\widgetContent\models\ContentWidget;
 use alex290\widgetContent\models\ContentWidgetItem;
+use alex290\widgetContent\Rules;
 use Yii;
 use yii\base\DynamicModel;
 use yii\helpers\Json;
@@ -33,16 +34,9 @@ class AdminController extends Controller
             $feild[] = 'widget';
             $feild[] = 'url';
 
-            $formModel = new DynamicModel($feild);
 
-            foreach ($widget['fields'] as $key => $value) {
-                if ($value[0] == 'image') {
-                    $formModel->addRule($key, 'file', ['extensions' => 'png, jpg']);
-                } else {
-                    if (array_key_exists('max', $value)) $formModel->addRule($key, $value[0], ['max' => $value['max']]);
-                    else $formModel->addRule($key, $value[0]);
-                }
-            }
+            $formModel = Rules::add(new DynamicModel($feild), $widget['fields']);
+            
             $formModel->addRule('model_name', 'string', ['max' => 255]);
             $formModel->addRule('item_id', 'integer');
             $formModel->addRule('type', 'string', ['max' => 255]);
@@ -157,14 +151,9 @@ class AdminController extends Controller
             $feild[] = 'url';
             $feild[] = 'id';
 
-            $formModel = new DynamicModel($feild);
 
-            foreach ($data as $key => $value) {
-                // debug($widget[$key]);
-                if (array_key_exists('max', $widget['fields'][$key])) $formModel->addRule($key, $widget['fields'][$key][0], ['max' => $widget['fields'][$key]['max']]);
-                else $formModel->addRule($key, $widget['fields'][$key][0]);
-                $formModel->$key = $value;
-            }
+            $formModel = Rules::update(new DynamicModel($feild), $data, $widget['fields']);
+
             if ($img == true) {
                 $formModel->addRule('image', 'file', ['extensions' => 'png, jpg']);
             }
