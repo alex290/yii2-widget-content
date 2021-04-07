@@ -15,7 +15,7 @@ $item = ContentWidgetItem::find()->where(['content_id'=> $model->id])->orderBy([
 
 $ckeditorPath = Yii::$app->getModule('widget-content')->ckeditorPath;
 
-debug($widget);
+// debug($widget);
 
 
 ?>

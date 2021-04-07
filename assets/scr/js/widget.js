@@ -50,7 +50,26 @@ function pagesAddContWidget(data) {
         success: function(response) {
             let htmlOb = document.querySelector('.get_cont_add_widget');
             htmlOb.innerHTML = response;
-            ckeditSt();
+            ckeditSt('ckStandart');
+            fileInpurAjax('image-fileinput');
+            showRemove();
+        }
+    });
+}
+
+
+function addWidgetItem(data) {
+    // console.log(data);
+    // let datArr = JSON.parse(data);
+    console.log(data[4]);
+    $.ajax({
+        type: "GET",
+        url: "/widget-content/item/add",
+        data: { 'widget': JSON.stringify(data[1]), 'id': data[0], 'url': data[2] },
+        success: function(response) {
+            let htmlOb = document.querySelector('.get_cont_add_widget_item');
+            htmlOb.innerHTML = response;
+            ckeditSt('ckStandartItem');
             fileInpurAjax('image-fileinput');
             showRemove();
         }
@@ -65,15 +84,15 @@ function showEditWidget(data) {
         success: function(response) {
             showRemove();
             $('.get_cont_update_widget_' + data[0]).html(response);
-            ckeditSt();
+            ckeditSt('ckStandart');
             fileInpurAjaxPrew('image-fileinput');
             disabSort();
         }
     });
 }
 
-function ckeditSt() {
-    $('.ckStandart').each(function(index, element) {
+function ckeditSt(classCk) {
+    $('.' + classCk).each(function(index, element) {
         let ckpath = $(this).data('ckpath');
         if (ckpath) {
             let ckpathId = $(this).attr('id');
