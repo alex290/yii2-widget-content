@@ -128,7 +128,7 @@ attach behaviour to your model (be sure that your model has "id" property)
             <div class="row">
                 <?php
                 $element = $widget['model']; // Основной виджет
-		$element->type // *Тип виджета* для разделения секций
+		$element->type // Тип виджета для разделения секций
                 $elementItem = $widget['item']; // Элементы виджета
                 $data = Json::decode($element->data); // Поля виджета
                 ?>
