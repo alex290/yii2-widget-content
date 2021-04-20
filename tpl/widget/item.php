@@ -7,6 +7,7 @@ use yii\helpers\Url;
 // debug($model);
 // debug($widget);
 $data = Json::decode($model->data);
+$name = '';
 if (array_key_exists('name', $data)) {
     $name = $data['name'];
 } elseif (array_key_exists('title', $data)) {
