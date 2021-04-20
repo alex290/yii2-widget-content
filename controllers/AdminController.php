@@ -36,7 +36,7 @@ class AdminController extends Controller
 
 
             $formModel = Rules::add(new DynamicModel($feild), $widget['fields']);
-            
+
             $formModel->addRule('model_name', 'string', ['max' => 255]);
             $formModel->addRule('item_id', 'integer');
             $formModel->addRule('type', 'string', ['max' => 255]);
@@ -126,6 +126,8 @@ class AdminController extends Controller
         $id = Yii::$app->request->post('id');
         $widget = Json::decode(Yii::$app->request->post('widget'));
 
+
+
         $img = false;
 
         foreach ($widget['fields'] as $key => $value) {
@@ -141,37 +143,38 @@ class AdminController extends Controller
 
 
         $feild = [];
-        $formModel = null;
         if (!empty($data)) {
             foreach ($data as $key => $value) {
                 $feild[] = $key;
             }
-            if ($img == true) {
-                $feild[] = 'image';
-            }
-
-            $feild[] = 'widget';
-            $feild[] = 'url';
-            $feild[] = 'id';
-
-
-            $formModel = Rules::update(new DynamicModel($feild), $data, $widget['fields']);
-
-            if ($img == true) {
-                $formModel->addRule('image', 'file', ['extensions' => 'png, jpg']);
-            }
-
-            // die;
-
-            $formModel->addRule('widget', 'safe');
-            $formModel->addRule('id', 'integer');
-            $formModel->addRule('url', 'string', ['max' => 255]);
-
-            $formModel->widget = Json::encode($widget);
-            $formModel->url = $url;
-            $formModel->id = $id;
         }
+        if ($img == true) {
+            $feild[] = 'image';
+        }
+        $feild[] = 'widget';
+        $feild[] = 'url';
+        $feild[] = 'id';
+        $formModel = null;
+
+
+        $formModel = Rules::update(new DynamicModel($feild), $data, $widget['fields']);
+
+        if ($img == true) {
+            $formModel->addRule('image', 'file', ['extensions' => 'png, jpg']);
+        }
+
+        // die;
+
+        $formModel->addRule('widget', 'safe');
+        $formModel->addRule('id', 'integer');
+        $formModel->addRule('url', 'string', ['max' => 255]);
+
+        $formModel->widget = Json::encode($widget);
+        $formModel->url = $url;
+        $formModel->id = $id;
+
         $this->layout = false;
+
 
         return $this->render('update', [
             'widget' => $widget,
