@@ -147,3 +147,6 @@ attach behaviour to your model (be sure that your model has "id" property)
         <?php endforeach ?>
     <?php endif ?>
     
+Вывод файла
+
+    <a href="/web/<?= $data['file']['patch'] ?>" download="<?= $data['file']['filename'] ?>">Поле с названием</a>

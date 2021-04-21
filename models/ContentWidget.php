@@ -107,11 +107,13 @@ class ContentWidget extends \yii\db\ActiveRecord
         $file = $fileData[0]->baseName . '.' . $fileData[0]->extension;
         $path = $dir . $file;
         $fileData[0]->saveAs($path);
-        // debug($dir);
-        // die;
+        
         $newPath = $dir . Yii::$app->getSecurity()->generateRandomString(6) . '.' . $fileData[0]->extension;
         rename($path, $newPath);
-        $data[$fileData[1]] = $newPath;
+        $data[$fileData[1]] =['patch'=> $newPath, 'filename' => $file];
+
+        // debug($data);
+        // die;
 
         $this->data = Json::encode($data);
         $this->save();
