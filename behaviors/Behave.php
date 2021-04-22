@@ -69,7 +69,7 @@ class Behave extends Behavior
         $data = explode("\\", $modelNamePath);
         $modelName = $data[(count($data) - 1)];
 
-        $modelWidgets = ContentWidget::find()->andWhere(['itemId' => $model->id])->andWhere(['modelName' => $modelName])->orderBy(['weight' => SORT_ASC])->all();
+        $modelWidgets = ContentWidget::find()->andWhere(['item_id' => $model->id])->andWhere(['model_name' => $modelName])->orderBy(['weight' => SORT_ASC])->all();
 
         if ($modelWidgets != null) {
             foreach ($modelWidgets as $key => $value) {
