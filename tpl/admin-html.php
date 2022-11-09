@@ -53,7 +53,7 @@ $data = Json::encode([
 <?php endif ?>
 <div class="float-left w-100 newContent"></div>
 <div class="float-left w-100 d-flex justify-content-center mt-5 wdgetAddBtn">
-    <button type="button" class="btn btn-outline-dark" data-toggle="collapse" data-target="#collapseWidgetContent" aria-expanded="false" aria-controls="collapseWidgetContent"><i class="fas fa-plus"></i></button>
+    <button type="button" class="btn btn-outline-dark" data-bs-toggle="collapse" data-bs-target="#collapseWidgetContent" aria-expanded="false" aria-controls="collapseWidgetContent"><i class="fas fa-plus"></i></button>
 </div>
 
 <div class="collapse" id="collapseWidgetContent">
