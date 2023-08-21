@@ -71,7 +71,10 @@ class WidgetImage extends Model
                 $path = $filePath.'/images' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
                 $model->removeImages();
                 $this->imageFile->saveAs($path);
-                $model->attachImage($path);
+                if (exif_imagetype($path) != IMAGETYPE_WEBP) {
+                    $model->attachImage($path);
+                }
+                
                 unlink($path);
             }
         }
