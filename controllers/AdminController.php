@@ -103,7 +103,11 @@ class AdminController extends Controller
                     $filePath = Yii::$app->getModule('widget-content')->path;
                     $path = $filePath . '/' . $uploadedFile->baseName . '.' . $uploadedFile->extension;
                     $uploadedFile->saveAs($path);
-                    $model->attachImage($path);
+
+                    if (exif_imagetype($path) != IMAGETYPE_WEBP) {
+                        $model->attachImage($path);
+                    }
+                    
                     unlink($path);
                 }
                 if (!empty($uploadedDoc)) {
@@ -247,7 +251,12 @@ class AdminController extends Controller
                     $filePath = Yii::$app->getModule('widget-content')->path;
                     $path = $filePath . '/' . $uploadedFile->baseName . '.' . $uploadedFile->extension;
                     $uploadedFile->saveAs($path);
-                    $model->attachImage($path);
+
+                    if (exif_imagetype($path) != IMAGETYPE_WEBP) {
+                        $model->attachImage($path);
+                    }
+
+                    
                     unlink($path);
                 }
                 if (!empty($uploadedDoc)) {

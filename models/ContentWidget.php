@@ -82,7 +82,9 @@ class ContentWidget extends \yii\db\ActiveRecord
         if ($this->validate()) {
             $path = $filePath . '/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
             $this->imageFile->saveAs($path);
-            $this->attachImage($path);
+            if (exif_imagetype($path) != IMAGETYPE_WEBP) {
+                $this->attachImage($path);
+            }
             unlink($path);
             return true;
         } else {
