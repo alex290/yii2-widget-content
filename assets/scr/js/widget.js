@@ -1,9 +1,9 @@
 var itemsSort = document.getElementById('itemsSort');
 if (itemsSort) {
     var sortable = Sortable.create(itemsSort, {
-        onEnd: function( /**Event*/ evt) {
+        onEnd: function ( /**Event*/ evt) {
             let arrId = [];
-            $('#itemsSort .item-sort').each(function(index, element) {
+            $('#itemsSort .item-sort').each(function (index, element) {
                 let idItem = $(this).data('id');
                 arrId[index] = idItem;
 
@@ -12,7 +12,7 @@ if (itemsSort) {
                 type: "GET",
                 url: "/widget-content/data/sort",
                 data: { 'ids': JSON.stringify(arrId) },
-                success: function(response) {}
+                success: function (response) { }
             });
         },
     });
@@ -24,11 +24,11 @@ function disabSort() {
 
     sortable.option("disabled", !state); // set
 
-    switcher.innerHTML = state ? 'disable' : 'enable';
+    // switcher.innerHTML = state ? 'disable' : 'enable';
 }
 
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('.carusel_widget').slick({
         infinite: true,
         slidesToShow: 5,
@@ -55,7 +55,7 @@ function pagesAddContWidget(data) {
         type: "POST",
         url: "/widget-content/admin/add",
         data: { 'widget': JSON.stringify(data[3]), 'key': data[2], 'model': data[0], 'id': data[1], 'url': data[4] },
-        success: function(response) {
+        success: function (response) {
             let htmlOb = document.querySelector('.get_cont_add_widget');
             htmlOb.innerHTML = response;
             ckeditSt('ckStandart');
@@ -75,7 +75,7 @@ function addWidgetItem(data) {
         type: "POST",
         url: "/widget-content/item/add",
         data: { 'widget': JSON.stringify(data[1]), 'id': data[0], 'url': data[2] },
-        success: function(response) {
+        success: function (response) {
             let htmlOb = document.querySelector('.get_cont_add_widget_item');
             htmlOb.innerHTML = response;
             ckeditSt('ckStandartItem');
@@ -91,7 +91,7 @@ function showEditWidget(data) {
         type: "POST",
         url: "/widget-content/admin/update",
         data: { 'id': data[0], 'url': data[2], 'widget': JSON.stringify(data[1]) },
-        success: function(response) {
+        success: function (response) {
             showRemove();
             $('.get_cont_update_widget_' + data[0]).html(response);
             ckeditSt('ckStandart');
@@ -109,7 +109,7 @@ function showEditWidgetItem(data) {
         type: "POST",
         url: "/widget-content/item/update",
         data: { 'widget': JSON.stringify(data[1]), 'id': data[0], 'url': data[2] },
-        success: function(response) {
+        success: function (response) {
             let htmlOb = document.querySelector('.get_cont_update_widget_item' + data[0]);
             htmlOb.innerHTML = response;
             ckeditSt('ckStandartItem');
@@ -121,23 +121,24 @@ function showEditWidgetItem(data) {
 }
 
 function ckeditSt(classCk) {
-    $('.' + classCk).each(function(index, element) {
-        let ckpath = $(this).data('ckpath');
-        if (ckpath) {
-            let ckpathId = $(this).attr('id');
-            let ckconf = $(this).data('ckconf');
-            // console.log(ckconf);
-            CKEDITOR.replace(ckpathId, {
-                customConfig: ckconf,
-            });
-        }
+    var editors = document.querySelectorAll('.' + classCk)
 
-    });
+    if (editors) {
+        editors.forEach(element => {
+            ClassicEditor
+                .create(element, {
+                    // Editor configuration.
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        });
+    }
 
 }
 
 function fileInpurAjax(classItem) {
-    $('.' + classItem).each(function(index, element) {
+    $('.' + classItem).each(function (index, element) {
         $(this).fileinput({
             theme: 'fas',
             language: 'ru',
@@ -153,7 +154,7 @@ function fileInpurAjax(classItem) {
 
 function fileInpurAjaxPrew(classItem) {
 
-    $('.' + classItem).each(function(index, element) {
+    $('.' + classItem).each(function (index, element) {
         let previewImage = $(this).data('image');
         $(this).fileinput({
             theme: 'fas',
@@ -177,7 +178,7 @@ function widgetClose() {
 }
 
 function showRemove() {
-    $('.showRemove').each(function(index, element) {
+    $('.showRemove').each(function (index, element) {
         element.remove();
     });
 

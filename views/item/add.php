@@ -3,14 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$ckeditorConfig = null;
-if (!(Yii::$app->getModule('widget-content')->ckeditorConfig == null || Yii::$app->getModule('widget-content')->ckeditorConfig == '')) {
-    $ckeditorConfig = Yii::$app->getModule('widget-content')->ckeditorConfig;
-}
-
-$ckeditorPath = Yii::$app->getModule('widget-content')->ckeditorPath;
-
-
 ?>
 <div class="card">
     <div class="card-header position-relative">
@@ -35,7 +27,7 @@ $ckeditorPath = Yii::$app->getModule('widget-content')->ckeditorPath;
                 <?php elseif ($value[0] == 'file') : ?>
                     <?= $form->field($formModel, $key)->fileInput() ?>
                 <?php elseif ($value[0] == 'string') : ?>
-                    <?= $form->field($formModel, $key)->textarea(['rows' => 6, 'class' => 'ckStandartItem', 'data-ckconf' => $ckeditorConfig, 'data-ckpath' => $ckeditorPath]) ?>
+                    <?= $form->field($formModel, $key)->textarea(['rows' => 6, 'class' => 'ckStandartItem']) ?>
                 <?php endif ?>
             <?php endforeach ?>
             <?= $form->field($formModel, 'content_id')->hiddenInput()->label(false) ?>

@@ -6,14 +6,10 @@ use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
-$ckeditorConfig = null;
-if (!(Yii::$app->getModule('widget-content')->ckeditorConfig == null || Yii::$app->getModule('widget-content')->ckeditorConfig == '')) {
-    $ckeditorConfig = Yii::$app->getModule('widget-content')->ckeditorConfig;
-}
+
 
 $item = ContentWidgetItem::find()->where(['content_id' => $model->id])->orderBy(['weight' => SORT_ASC])->all();
 
-$ckeditorPath = Yii::$app->getModule('widget-content')->ckeditorPath;
 
 // debug($widget);
 
@@ -42,7 +38,7 @@ $ckeditorPath = Yii::$app->getModule('widget-content')->ckeditorPath;
             <?php elseif ($value[0] == 'file') : ?>
                 <?= $form->field($formModel, $key)->fileInput() ?>
             <?php elseif ($value[0] == 'string') : ?>
-                <?= $form->field($formModel, $key)->textarea(['rows' => 6, 'class' => 'ckStandart', 'data-ckconf' => $ckeditorConfig, 'data-ckpath' => $ckeditorPath]) ?>
+                <?= $form->field($formModel, $key)->textarea(['rows' => 6, 'class' => 'ckStandart']) ?>
             <?php endif ?>
         <?php endforeach ?>
 

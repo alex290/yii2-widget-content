@@ -3,13 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$ckeditorConfig = null;
-if (!(Yii::$app->getModule('widget-content')->ckeditorConfig == null || Yii::$app->getModule('widget-content')->ckeditorConfig == '')) {
-    $ckeditorConfig = Yii::$app->getModule('widget-content')->ckeditorConfig;
-}
-
-$ckeditorPath = Yii::$app->getModule('widget-content')->ckeditorPath;
-
 
 ?>
 <div class="card">
@@ -35,7 +28,7 @@ $ckeditorPath = Yii::$app->getModule('widget-content')->ckeditorPath;
                 <?php elseif ($value[0] == 'select') : ?>
                     <?= $form->field($formModel, $key)->dropDownList($widget['fields']['category']) ?>
                 <?php elseif ($value[0] == 'string') : ?>
-                    <?= $form->field($formModel, $key)->textarea(['rows' => 6, 'class' => 'ckStandart', 'data-ckconf' => $ckeditorConfig, 'data-ckpath' => $ckeditorPath]) ?>
+                    <?= $form->field($formModel, $key)->textarea(['rows' => 6, 'class' => 'ckStandart']) ?>
                 <?php endif ?>
             <?php endforeach ?>
             <?= $form->field($formModel, 'model_name')->hiddenInput()->label(false) ?>

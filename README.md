@@ -27,14 +27,18 @@ Usage
 
 Once the extension is installed, simply use it in your code by  :
 
+Подключить внешне Ckeditor 5 classic
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+Или скачать сборку и подключить по инструкции из документации Ckeditor https://ckeditor.com/docs/
+
 в конфиге web.php прописать
 
     'modules' => [
         'widget-content' => [
             'class' => 'alex290\widgetContent\Module',
             'path' => 'upload', //path to files
-            'ckeditorPath' => '/web/lib/ckeditor/ckeditor.js', // Путь к внешнему Ckeditor - Необязательно
-            'ckeditorConfig' => '/web/lib/ckeditor/config-st.js', // Путь к конфигурации внешнего Ckeditor  - Необязательно
         ],
     ],
 

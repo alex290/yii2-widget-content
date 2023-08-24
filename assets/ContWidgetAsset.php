@@ -36,20 +36,10 @@ class ContWidgetAsset extends AssetBundle
         'yii\web\YiiAsset',
     ];
 
-    protected function ckeditor()
-    {
-        $ckeditorPath = Yii::$app->getModule('widget-content')->ckeditorPath;
-
-        if ($ckeditorPath) {
-            $this->js[] = $ckeditorPath;
-        }
-        
-    }
-
-    public function init()
+     public function init()
     {
         parent::init();
-        $this->ckeditor();
+        
     }
     
 }
