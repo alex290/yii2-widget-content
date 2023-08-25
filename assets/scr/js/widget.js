@@ -139,14 +139,26 @@ function ckeditSt(classCk) {
 
 function fileInpurAjax(classItem) {
     $('.' + classItem).each(function (index, element) {
+        // $(this).fileinput({
+        //     theme: 'fas',
+        //     language: 'ru',
+        //     allowedFileExtensions: ['jpg', 'png', 'jpeg', 'svg'],
+        //     initialPreviewAsData: true,
+        //     showUpload: false,
+        //     showRemove: false,
+        //     // maxFileSize: 2000,
+        // });
+
         $(this).fileinput({
-            theme: 'fas',
+            theme: 'fa6',
             language: 'ru',
-            allowedFileExtensions: ['jpg', 'png', 'jpeg', 'svg'],
-            initialPreviewAsData: true,
-            showUpload: false,
+            uploadUrl: '#',
+            maxFilePreviewSize: 2* 1024 * 1024,
+            uploadUrl: false,
             showRemove: false,
-            // maxFileSize: 2000,
+            showUpload: false,
+            dropZoneEnabled: false,
+            allowedFileExtensions: ['jpg', 'png', 'jpeg']
         });
 
     });
@@ -156,17 +168,33 @@ function fileInpurAjaxPrew(classItem) {
 
     $('.' + classItem).each(function (index, element) {
         let previewImage = $(this).data('image');
+        // $(this).fileinput({
+        //     theme: 'fas',
+        //     language: 'ru',
+        //     allowedFileExtensions: ['jpg', 'png', 'jpeg', 'svg'],
+        //     initialPreviewAsData: true,
+        //     initialPreview: [
+        //         previewImage == '' ? null : '/web/' + previewImage,
+        //     ],
+        //     showUpload: false,
+        //     showRemove: false,
+        //     // maxFileSize: 2000,
+        // });
+
         $(this).fileinput({
-            theme: 'fas',
+            theme: 'fa6',
             language: 'ru',
-            allowedFileExtensions: ['jpg', 'png', 'jpeg', 'svg'],
+            uploadUrl: '#',
+            maxFilePreviewSize: 2* 1024 * 1024,
             initialPreviewAsData: true,
             initialPreview: [
                 previewImage == '' ? null : '/web/' + previewImage,
             ],
-            showUpload: false,
+            uploadUrl: false,
             showRemove: false,
-            // maxFileSize: 2000,
+            showUpload: false,
+            dropZoneEnabled: false,
+            allowedFileExtensions: ['jpg', 'png', 'jpeg']
         });
 
     });

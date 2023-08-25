@@ -27,29 +27,31 @@ $item = ContentWidgetItem::find()->where(['content_id' => $model->id])->orderBy(
         ]) ?>
         <?= $form->field($formModel, 'id')->hiddenInput()->label(false) ?>
         <?php foreach ($widget['fields'] as $key => $value) : ?>
-            <?php if ($value[0] == 'image') : ?>
-                <?= $form->field($formModel, $key)->fileInput(['class' => 'image-fileinput', 'data-image' => $model->getImage()->getPath()]) ?>
-            <?php elseif ($value[0] == 'string' && array_key_exists('max', $value)) : ?>
-                <?= $form->field($formModel, $key)->textInput() ?>
-            <?php elseif ($value[0] == 'select') : ?>
-                <?= $form->field($formModel, $key)->dropDownList($widget['fields']['category']) ?>
-            <?php elseif ($value[0] == 'integer') : ?>
-                <?= $form->field($formModel, $key)->textInput(['type' => 'number']) ?>
-            <?php elseif ($value[0] == 'file') : ?>
-                <?= $form->field($formModel, $key)->fileInput() ?>
-            <?php elseif ($value[0] == 'string') : ?>
-                <?= $form->field($formModel, $key)->textarea(['rows' => 6, 'class' => 'ckStandart']) ?>
-            <?php endif ?>
+            <div class="mt-3">
+                <?php if ($value[0] == 'image') : ?>
+                    <?= $form->field($formModel, $key)->fileInput(['class' => 'image-fileinput', 'data-image' => $model->getImage()->getPath()])->label((array_key_exists('label', $value)) ?  $value['label'] : $key) ?>
+                <?php elseif ($value[0] == 'string' && array_key_exists('max', $value)) : ?>
+                    <?= $form->field($formModel, $key)->textInput()->label((array_key_exists('label', $value)) ?  $value['label'] : $key) ?>
+                <?php elseif ($value[0] == 'select') : ?>
+                    <?= $form->field($formModel, $key)->dropDownList($widget['fields'][$key][1])->label((array_key_exists('label', $value)) ?  $value['label'] : $key) ?>
+                <?php elseif ($value[0] == 'integer') : ?>
+                    <?= $form->field($formModel, $key)->textInput(['type' => 'number'])->label((array_key_exists('label', $value)) ?  $value['label'] : $key) ?>
+                <?php elseif ($value[0] == 'file') : ?>
+                    <?= $form->field($formModel, $key)->fileInput()->label((array_key_exists('label', $value)) ?  $value['label'] : $key) ?>
+                <?php elseif ($value[0] == 'string') : ?>
+                    <?= $form->field($formModel, $key)->textarea(['rows' => 6, 'class' => 'ckStandart'])->label((array_key_exists('label', $value)) ?  $value['label'] : $key) ?>
+                <?php endif ?>
+            </div>
         <?php endforeach ?>
 
         <?= $form->field($formModel, 'widget')->hiddenInput()->label(false) ?>
         <?= $form->field($formModel, 'url')->hiddenInput()->label(false) ?>
-        <div class="form-group">
+        <div class="form-group mt-3">
             <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
         </div>
         <?php ActiveForm::end(); ?>
         <?php if (array_key_exists('item', $widget)) : ?>
-            <div class="w-100">
+            <div class="w-100 mt-4">
                 <?php if ($item != null) : ?>
                     <?php foreach ($item as $key => $valueItem) : ?>
                         <?= $this->render('widgetItem', ['model' => $valueItem, 'url' =>  $formModel->url, 'widget' => $widget]) ?>
