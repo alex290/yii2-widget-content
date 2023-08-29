@@ -11,7 +11,11 @@ class DataController extends Controller
 
     public function actionSortable($data)
     {
-        foreach (Json::decode($data) as $key => $id) {
+        $dataFile = Json::decode($data);
+        if (!is_array($dataFile)) {
+            $dataFile = Json::decode($dataFile);
+        }
+        foreach ($dataFile as $key => $id) {
             $model = ContentWidget::findOne($id);
             $model->weight = $key;
             $model->save();

@@ -42,6 +42,9 @@ class WidgetText extends Model
         $model = ContentWidget::findOne($id);
         if ($model != null) {
             $data = Json::decode($model->data);
+            if (!is_array($data)) {
+                $data = Json::decode($data);
+            }
             if (array_key_exists('text', $data)) {
                 $this->text = $data['text'];
             }

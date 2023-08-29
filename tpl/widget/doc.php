@@ -5,6 +5,9 @@ use yii\helpers\Json;
 use yii\helpers\Url;
 
 $data = Json::decode($widget->data);
+if (!is_array($data)) {
+    $data = Json::decode($data);
+}
 $fileName = null;
 if (array_key_exists('fileName', $data)) {
     $fileName = $data['fileName'];

@@ -50,6 +50,9 @@ class Behave extends Behavior
             foreach ($modelWidget as $key => $value) {
                 if ($value->type == 3) {
                     $dataFile = Json::decode($value->data);
+                    if (!is_array($dataFile)) {
+                        $dataFile = Json::decode($dataFile);
+                    }
                     if ($dataFile['file'] == null || $dataFile['file'] == ''){
                         $articleDoc = new WidgetDoc();
                         $articleDoc->openModel($value->id);

@@ -32,7 +32,11 @@ $data = Json::encode([
                         'widget' => $widget,
                     ]) ?>
                 <?php elseif ($widget->type == 3) : ?>
-                    <?php $dataFile = Json::decode($widget->data) ?>
+                    <?php $dataFile = Json::decode($widget->data);
+                    if (!is_array($dataFile)) {
+                        $dataFile = Json::decode($dataFile);
+                    }
+                     ?>
                     <?php if ($dataFile['file'] == null || $dataFile['file'] == '') : ?>
                         <?php
                         $articleDoc = new WidgetDoc();

@@ -6,6 +6,9 @@ use yii\helpers\Url;
 
 
 $data = Json::decode($widget->data);
+if (!is_array($data)) {
+    $data = Json::decode($data);
+}
 $url = Url::to();
 $updateWidgetText = Json::encode([
     'id' => $widget->id,
