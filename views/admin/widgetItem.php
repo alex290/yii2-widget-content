@@ -3,7 +3,15 @@
 use yii\helpers\Html;
 use yii\helpers\Json;
 
-$data = Json::decode($model->data);
+$data = [];
+$posrArrD = $model->data;
+if (!is_array($posrArrD)) {
+    $data = Json::decode($posrArrD);
+} else {
+    $data = $posrArrD;
+}
+
+// $data = Json::decode($model->data);
 
 ?>
 <div class="col-12 mb-4 get_cont_update_widget_item<?= $model->id ?>">

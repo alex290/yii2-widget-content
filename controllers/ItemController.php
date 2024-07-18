@@ -15,7 +15,14 @@ class ItemController extends Controller
 {
     public function actionAdd()
     {
-        $widget = Json::decode(Yii::$app->request->post('widget'));
+        // $widget = Json::decode(Yii::$app->request->post('widget'));
+        $widget = [];
+        $posrArr = Yii::$app->request->post('widget');
+        if (!is_array($posrArr)) {
+            $widget = Json::decode($posrArr);
+        } else {
+            $widget = $posrArr;
+        }
         $url = Yii::$app->request->post('url');
         $id = Yii::$app->request->post('id');
 
@@ -53,7 +60,16 @@ class ItemController extends Controller
     {
 
         if ($data = Yii::$app->request->post()['DynamicModel']) {
-            $widget = Json::decode($data['widget']);
+            // $widget = Json::decode($data['widget']);
+
+            $widget = [];
+            $posrArr = $data['widget'];
+            if (!is_array($posrArr)) {
+                $widget = Json::decode($posrArr);
+            } else {
+                $widget = $posrArr;
+            }
+
             $uploadedDoc = [];
 
             $uploadedFile = null;
@@ -107,7 +123,15 @@ class ItemController extends Controller
 
         $url = Yii::$app->request->post('url');
         $id = Yii::$app->request->post('id');
-        $widget = Json::decode(Yii::$app->request->post('widget'));
+        // $widget = Json::decode(Yii::$app->request->post('widget'));
+
+        $widget = [];
+        $posrArr = Yii::$app->request->post('widget');
+        if (!is_array($posrArr)) {
+            $widget = Json::decode($posrArr);
+        } else {
+            $widget = $posrArr;
+        }
 
         $img = false;
 
@@ -122,7 +146,15 @@ class ItemController extends Controller
         // debug($widget);
         // die;
 
-        $data = Json::decode($model->data);
+        $data = [];
+        $posrArrD = $model->data;
+        if (!is_array($posrArrD)) {
+            $data = Json::decode($posrArrD);
+        } else {
+            $data = $posrArrD;
+        }
+
+        // $data = Json::decode($model->data);
 
 
 
@@ -172,9 +204,18 @@ class ItemController extends Controller
 
             $model = ContentWidgetItem::findOne($data['id']);
 
-            
+
             unset($data['id']);
-            $widget = Json::decode($data['widget']);
+
+            $widget = [];
+            $posrArr = Json::decode($data['widget']);
+            if (!is_array($posrArr)) {
+                $widget = Json::decode($posrArr);
+            } else {
+                $widget = $posrArr;
+            }
+
+            // $widget = Json::decode($data['widget']);
             unset($data['widget']);
             $url = $data['url'];
             unset($data['url']);

@@ -99,7 +99,14 @@ class ContentWidget extends \yii\db\ActiveRecord
 
     public function saveFile($fileData)
     {
-        $data = Json::decode($this->data);
+        $data = [];
+        $posrArrD = $this->data;
+        if (!is_array($posrArrD)) {
+            $data = Json::decode($posrArrD);
+        } else {
+            $data = $posrArrD;
+        }
+        // $data = Json::decode($this->data);
         // debug($fileData);
         // die;
         $filePath = Yii::$app->getModule('widget-content')->path;

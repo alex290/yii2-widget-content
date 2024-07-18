@@ -17,7 +17,14 @@ class AdminController extends Controller
 
     public function actionAdd()
     {
-        $widget = Json::decode(Yii::$app->request->post('widget'));
+        $widget = [];
+        $posrArr = Yii::$app->request->post('widget');
+        if (!is_array($posrArr)) {
+            $widget = Json::decode($posrArr);
+        } else {
+            $widget = $posrArr;
+        }
+
         $modelName = Yii::$app->request->post('model');
         $keyType = Yii::$app->request->post('key');
         $url = Yii::$app->request->post('url');
@@ -69,7 +76,16 @@ class AdminController extends Controller
     {
 
         if ($data = Yii::$app->request->post()['DynamicModel']) {
-            $widget = Json::decode($data['widget']);
+
+            $widget = [];
+            $posrArr = $data['widget'];
+            if (!is_array($posrArr)) {
+                $widget = Json::decode($posrArr);
+            } else {
+                $widget = $posrArr;
+            }
+
+            // $widget = Json::decode($data['widget']);
             $uploadedFile = null;
             $uploadedDoc = [];
             foreach ($widget as $key => $value) {
@@ -107,7 +123,7 @@ class AdminController extends Controller
                     if (exif_imagetype($path) != IMAGETYPE_WEBP) {
                         $model->attachImage($path);
                     }
-                    
+
                     unlink($path);
                 }
                 if (!empty($uploadedDoc)) {
@@ -128,7 +144,17 @@ class AdminController extends Controller
 
         $url = Yii::$app->request->post('url');
         $id = Yii::$app->request->post('id');
-        $widget = Json::decode(Yii::$app->request->post('widget'));
+
+        $widget = [];
+        $posrArr = Yii::$app->request->post('widget');
+        if (!is_array($posrArr)) {
+            $widget = Json::decode($posrArr);
+        } else {
+            $widget = $posrArr;
+        }
+
+
+        // $widget = Json::decode(Yii::$app->request->post('widget'));
 
 
 
@@ -142,7 +168,15 @@ class AdminController extends Controller
 
         $model = ContentWidget::findOne($id);
 
-        $data = Json::decode($model->data);
+        $data = [];
+        $posrArrD = $model->data;
+        if (!is_array($posrArrD)) {
+            $data = Json::decode($posrArrD);
+        } else {
+            $data = $posrArrD;
+        }
+
+        // $data = Json::decode($model->data);
 
 
 
@@ -227,7 +261,16 @@ class AdminController extends Controller
 
             $model = ContentWidget::findOne($data['id']);
             unset($data['id']);
-            $widget = Json::decode($data['widget']);
+
+            $widget = [];
+            $posrArr = Json::decode($data['widget']);
+            if (!is_array($posrArr)) {
+                $widget = Json::decode($posrArr);
+            } else {
+                $widget = $posrArr;
+            }
+
+            // $widget = Json::decode($data['widget']);
             unset($data['widget']);
             $url = $data['url'];
             unset($data['url']);
@@ -256,7 +299,7 @@ class AdminController extends Controller
                         $model->attachImage($path);
                     }
 
-                    
+
                     unlink($path);
                 }
                 if (!empty($uploadedDoc)) {

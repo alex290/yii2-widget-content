@@ -13,7 +13,16 @@ class DataController extends Controller
     public function actionSort()
     {
         $ids = Yii::$app->request->get('ids');
-        foreach (Json::decode($ids) as $key => $id) {
+
+        $widget = [];
+        // $posrArr = Json::decode($data['widget']);
+        if (!is_array($ids)) {
+            $widget = Json::decode($ids);
+        } else {
+            $widget = $ids;
+        }
+
+        foreach ($widget as $key => $id) {
             $model = ContentWidget::findOne($id);
             $model->weight = $key;
             $model->save();
